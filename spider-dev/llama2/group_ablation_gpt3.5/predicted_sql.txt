@@ -1,0 +1,100 @@
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+SELECT Name, Country, Age FROM singer ORDER BY Age DESC
+SELECT Name, Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer)
+SELECT stadium.Name, stadium.Capacity FROM stadium WHERE stadium.Highest = (SELECT MAX(stadium.Average) FROM stadium)
+SELECT stadium.Name, stadium.Capacity FROM stadium WHERE stadium.Stadium_ID = (SELECT concert.Stadium_ID FROM concert WHERE concert.concert_ID = (SELECT singer_in_concert.concert_ID FROM singer_in_concert WHERE singer_in_concert.Singer_ID = (SELECT singer.Singer_ID FROM singer WHERE singer.Age = (SELECT MAX(singer.Age) FROM singer))))
+SELECT concert_Name, Theme, COUNT(Singer_ID) AS number_of_singers  FROM concert  JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID  GROUP BY concert_Name, Theme
+SELECT weight FROM pets WHERE pet_type = 'dog' ORDER BY pet_age ASC LIMIT 1
+SELECT PetType, weight FROM Pets WHERE pet_age = (SELECT MIN(pet_age) FROM Pets)
+SELECT PetType, weight FROM Pets WHERE pet_age = (SELECT MIN(pet_age) FROM Pets)
+SELECT Model FROM cars_data INNER JOIN car_names ON cars_data.Id = car_names.MakeId ORDER BY Horsepower ASC LIMIT 1
+SELECT car_names.Model FROM cars_data JOIN car_names ON cars_data.Id = car_names.MakeId ORDER BY cars_data.Horsepower ASC LIMIT 1
+SELECT car_makers.Id, car_makers.FullName, COUNT(model_list.ModelId) AS num_car_models FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker GROUP BY car_makers.Id, car_makers.FullName
+SELECT CountryId, CountryName FROM countries WHERE CountryId IN (SELECT Country FROM car_makers)
+SELECT Year, AVG(Weight) FROM cars_data GROUP BY Year
+SELECT Model FROM car_names  JOIN model_list ON car_names.Model = model_list.ModelId  JOIN cars_data ON car_names.MakeId = cars_data.Id  ORDER BY cars_data.MPG DESC LIMIT 1
+SELECT Horsepower FROM cars_data WHERE Accelerate = (SELECT MAX(Accelerate) FROM cars_data)
+SELECT Horsepower FROM cars_data WHERE Accelerate = (SELECT MAX(Accelerate) FROM cars_data)
+SELECT AirportCode FROM airports JOIN flights ON airports.AirportCode = flights.SourceAirport OR airports.AirportCode = flights.DestAirport GROUP BY airports.AirportCode ORDER BY COUNT(flights.FlightNo) ASC LIMIT 1
+SELECT Name FROM employee ORDER BY Age ASC
+SELECT Name FROM employee ORDER BY Age ASC
+SELECT shop.Manager_name, shop.District  FROM shop  WHERE shop.Number_products = (SELECT MAX(Number_products) FROM shop)
+SELECT Name, Location, District FROM shop ORDER BY Number_products DESC
+SELECT employee.Name FROM employee INNER JOIN evaluation ON employee.Employee_ID = evaluation.Employee_ID WHERE evaluation.Bonus = (SELECT MAX(Bonus) FROM evaluation)
+SELECT employee.Name FROM employee JOIN evaluation ON employee.Employee_ID = evaluation.Employee_ID ORDER BY evaluation.Bonus DESC LIMIT 1
+SELECT Name FROM teacher ORDER BY Age ASC
+SELECT Name FROM teacher ORDER BY Age ASC
+SELECT teacher.Name, course.Course FROM teacher JOIN course_arrange ON teacher.Teacher_ID = course_arrange.Teacher_ID JOIN course ON course_arrange.Course_ID = course.Course_ID ORDER BY teacher.Name ASC
+SELECT teacher.Name, course.Course FROM teacher JOIN course_arrange ON teacher.Teacher_ID = course_arrange.Teacher_ID JOIN course ON course_arrange.Course_ID = course.Course_ID ORDER BY teacher.Name ASC
+SELECT first_name, country_code FROM players WHERE birth_date = (SELECT MIN(birth_date) FROM players)
+SELECT first_name, country_code FROM players WHERE birth_date = (SELECT MIN(birth_date) FROM players)
+SELECT first_name, last_name FROM players ORDER BY birth_date
+SELECT CONCAT(players.first_name, ' ', players.last_name) AS full_name FROM players ORDER BY players.birth_date
+ SELECT winner_name, loser_name  FROM matches  WHERE minutes = (SELECT MAX(minutes) FROM matches)
+SELECT players.first_name, AVG(rankings.ranking) AS average_ranking FROM players JOIN rankings ON players.player_id = rankings.player_id GROUP BY players.first_name
+SELECT players.first_name, AVG(rankings.ranking) AS average_ranking FROM players JOIN rankings ON players.player_id = rankings.player_id GROUP BY players.first_name
+SELECT players.first_name, SUM(rankings.ranking_points) AS total_ranking_points FROM players JOIN rankings ON players.player_id = rankings.player_id GROUP BY players.first_name
+ SELECT winner_name, winner_rank  FROM matches  JOIN players ON matches.winner_id = players.player_id  ORDER BY winner_age ASC  LIMIT 3
+ SELECT winner_name, winner_rank  FROM matches  JOIN players ON matches.winner_id = players.player_id  ORDER BY winner_age ASC  LIMIT 3
+SELECT name, tonnage FROM ship ORDER BY name DESC
+SELECT section_name FROM sections ORDER BY section_name DESC
+SELECT section_name FROM sections ORDER BY section_name DESC
+SELECT first_name, middle_name, last_name FROM students ORDER BY date_first_registered ASC LIMIT 1
+SELECT first_name, middle_name, last_name FROM students ORDER BY date_left ASC LIMIT 1
+SELECT first_name, middle_name, last_name FROM students ORDER BY date_first_registered ASC LIMIT 1
+SELECT transcript_date, other_details FROM transcripts ORDER BY transcript_date ASC LIMIT 1
+SELECT transcript_date FROM transcripts ORDER BY transcript_date DESC LIMIT 1
+ SELECT transcript_date, transcript_id  FROM transcripts  GROUP BY transcript_date, transcript_id  ORDER BY count(*) ASC  LIMIT 1
+SELECT transcript_date, transcript_id FROM transcripts ORDER BY (SELECT COUNT(*) FROM transcript_contents WHERE transcript_contents.transcript_id = transcripts.transcript_id) ASC LIMIT 1
+SELECT * FROM Students ORDER BY last_name DESC, first_name DESC, middle_name DESC
+SELECT * FROM students ORDER BY last_name DESC
+SELECT Title FROM Cartoon ORDER BY Title ASC
+SELECT Title FROM Cartoon ORDER BY Title ASC
+SELECT Title, Directed_by FROM Cartoon ORDER BY Original_air_date
+SELECT Title, Directed_by FROM Cartoon ORDER BY Original_air_date
+SELECT Episode FROM TV_series ORDER BY Rating DESC
+SELECT Episode FROM TV_series ORDER BY Rating DESC
+SELECT Episode, Rating FROM TV_series ORDER BY Rating DESC LIMIT 3
+SELECT Production_code, Channel  FROM Cartoon  JOIN TV_Channel ON Cartoon.Channel = TV_Channel.id  ORDER BY Original_air_date DESC  LIMIT 1
+SELECT Production_code, Channel FROM Cartoon ORDER BY Original_air_date DESC LIMIT 1
+SELECT earnings FROM poker_player ORDER BY earnings DESC
+SELECT earnings FROM poker_player ORDER BY earnings DESC
+SELECT Money_Rank FROM poker_player WHERE Earnings = (SELECT MAX(Earnings) FROM poker_player)
+SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1
+SELECT people.Name FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID ORDER BY poker_player.Final_Table_Made ASC
+SELECT birth_date FROM people INNER JOIN poker_player ON people.people_id = poker_player.people_id ORDER BY earnings ASC LIMIT 1
+SELECT birth_date FROM people INNER JOIN poker_player ON people.people_id = poker_player.people_id ORDER BY earnings ASC LIMIT 1
+SELECT poker_player.Money_Rank  FROM poker_player  JOIN people ON poker_player.People_ID = people.People_ID  WHERE people.Height = (SELECT MAX(Height) FROM people)
+SELECT Money_Rank FROM poker_player  JOIN people ON poker_player.People_ID = people.People_ID  ORDER BY Height DESC LIMIT 1
+SELECT people.Name FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID ORDER BY poker_player.Earnings DESC
+SELECT people.Name FROM people INNER JOIN poker_player ON people.People_ID = poker_player.People_ID ORDER BY poker_player.Earnings DESC
+SELECT Name, Birth_Date FROM people ORDER BY Name ASC
+SELECT Name, Birth_Date FROM people ORDER BY Name ASC
+SELECT contestant_number, contestant_name FROM contestants ORDER BY contestant_name DESC
+ SELECT contestant_number, contestant_name  FROM contestants  WHERE contestant_number = (     SELECT contestant_number      FROM votes      GROUP BY contestant_number      ORDER BY count(*) ASC      LIMIT 1 )
+SELECT country.Name FROM country  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  GROUP BY country.Name  ORDER BY COUNT(DISTINCT countrylanguage.Language) DESC  LIMIT 1
+SELECT country.Name, country.IndepYear, country.SurfaceArea  FROM country  ORDER BY country.Population ASC  LIMIT 1
+SELECT country.Name, country.IndepYear, country.SurfaceArea  FROM country  WHERE country.Population = (SELECT MIN(Population) FROM country)
+SELECT country.Population, country.Name, country.HeadOfState  FROM country  WHERE country.SurfaceArea = (SELECT MAX(SurfaceArea) FROM country)
+SELECT country.Name, country.Population, country.HeadOfState  FROM country  ORDER BY country.SurfaceArea DESC  LIMIT 1
+SELECT Name, SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5
+SELECT Name, SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5
+SELECT Name FROM country ORDER BY Population DESC LIMIT 3
+SELECT Name FROM country ORDER BY Population DESC LIMIT 3
+SELECT Name FROM country ORDER BY Population ASC LIMIT 3
+SELECT Name FROM country ORDER BY Population ASC LIMIT 3
+SELECT Name FROM conductor ORDER BY Age ASC
+SELECT Name FROM conductor ORDER BY Age
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC
+SELECT Name FROM conductor ORDER BY Age DESC
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1
+SELECT Major_Record_Format FROM orchestra GROUP BY Major_Record_Format ORDER BY count(*) ASC
+SELECT name FROM Highschooler  WHERE ID IN (SELECT student_id FROM Friend               GROUP BY student_id               ORDER BY count(*) DESC               LIMIT 1)
+SELECT treatment_type_description FROM treatment_types  WHERE treatment_type_code = (SELECT treatment_type_code FROM treatments  GROUP BY treatment_type_code  ORDER BY SUM(cost_of_treatment) ASC  LIMIT 1)
+SELECT cost_of_treatment FROM treatments ORDER BY date_of_treatment DESC LIMIT 1
+SELECT cost_of_treatment FROM treatments ORDER BY date_of_treatment DESC LIMIT 1
+SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC
+SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1

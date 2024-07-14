@@ -1,0 +1,274 @@
+[
+    {
+        "p_str": "SELECT Name, Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer)",
+        "g_str": [
+            "SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1",
+            "concert_singer"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT max(Capacity), avg(Capacity) FROM stadium",
+        "g_str": [
+            "select max(capacity), average from stadium",
+            "concert_singer"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT MIN(pet_age) FROM pets WHERE pet_type = 'dog'",
+        "g_str": [
+            "SELECT weight FROM pets ORDER BY pet_age LIMIT 1",
+            "pets_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Model FROM cars_data WHERE Horsepower = (SELECT MIN(Horsepower) FROM cars_data)",
+        "g_str": [
+            "SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;",
+            "car_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Maker, Model FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker JOIN car_names ON model_list.Model = car_names.Model",
+        "g_str": [
+            "SELECT Maker ,  Model FROM MODEL_LIST;",
+            "car_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Maker, Model FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker JOIN car_names ON model_list.ModelId = car_names.MakeId",
+        "g_str": [
+            "SELECT Maker ,  Model FROM MODEL_LIST;",
+            "car_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Name FROM employee ORDER BY Bonus DESC LIMIT 1",
+        "g_str": [
+            "SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID ORDER BY t2.bonus DESC LIMIT 1",
+            "employee_hire_evaluation"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT T3.Name, T1.Course FROM course_arrange AS T1 JOIN teacher AS T3 ON T1.Teacher_ID = T3.Teacher_ID JOIN course AS T2 ON T1.Course_ID = T2.Course_ID",
+        "g_str": [
+            "SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID",
+            "course_teach"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT T2.Name, T1.Course FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID ORDER BY T2.Name ASC",
+        "g_str": [
+            "SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID ORDER BY T3.Name",
+            "course_teach"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT T2.Name, T1.Course FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID ORDER BY T2.Name ASC",
+        "g_str": [
+            "SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID ORDER BY T3.Name",
+            "course_teach"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT MAX(loser_rank) FROM matches",
+        "g_str": [
+            "SELECT min(loser_rank) FROM matches",
+            "wta_1"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT MAX(loser_rank) FROM matches",
+        "g_str": [
+            "SELECT min(loser_rank) FROM matches",
+            "wta_1"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT CONCAT(players.first_name, ' ', players.last_name) FROM players ORDER BY players.birth_date",
+        "g_str": [
+            "SELECT first_name ,  last_name FROM players ORDER BY birth_date",
+            "wta_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT p1.first_name, p2.first_name  FROM matches AS m  JOIN players AS p1 ON m.winner_id = p1.player_id  JOIN players AS p2 ON m.loser_id = p2.player_id  WHERE m.minutes = (SELECT MAX(minutes) FROM matches)",
+        "g_str": [
+            "SELECT winner_name ,  loser_name FROM matches ORDER BY minutes DESC LIMIT 1",
+            "wta_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT p.first_name, p.last_name, r.ranking  FROM players p  JOIN rankings r ON p.player_id = r.player_id  WHERE p.player_id IN (     SELECT m.winner_id      FROM matches m      ORDER BY m.winner_age ASC      LIMIT 3 )",
+        "g_str": [
+            "SELECT DISTINCT winner_name ,  winner_rank FROM matches ORDER BY winner_age LIMIT 3",
+            "wta_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT p.first_name, p.last_name, r.ranking  FROM matches m  JOIN players p ON m.winner_id = p.player_id  JOIN rankings r ON p.player_id = r.player_id  ORDER BY p.birth_date ASC  LIMIT 3",
+        "g_str": [
+            "SELECT DISTINCT winner_name ,  winner_rank FROM matches ORDER BY winner_age LIMIT 3",
+            "wta_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT name, date, result FROM battle",
+        "g_str": [
+            "SELECT name ,  date FROM battle",
+            "battle_death"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT first_name, middle_name, last_name FROM Students JOIN Student_Enrolment ON Students.student_id = Student_Enrolment.student_id JOIN Transcripts ON Student_Enrolment.student_enrolment_id = Transcripts.transcript_id ORDER BY Transcripts.transcript_date ASC LIMIT 1",
+        "g_str": [
+            "SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_left ASC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT transcript_id, transcript_date FROM Transcripts ORDER BY (SELECT COUNT(*) FROM Transcript_Contents WHERE Transcript_Contents.transcript_id = Transcripts.transcript_id) ASC LIMIT 1",
+        "g_str": [
+            "SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id ORDER BY count(*) ASC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT DISTINCT line_1, line_2, line_3, city, zip_postcode, state_province_county, country FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id = T2.current_address_id OR T1.address_id = T2.permanent_address_id",
+        "g_str": [
+            "SELECT count(DISTINCT current_address_id) FROM Students",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT * FROM students ORDER BY last_name DESC, first_name DESC",
+        "g_str": [
+            "SELECT other_student_details FROM Students ORDER BY other_student_details DESC",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT * FROM Students ORDER BY last_name DESC",
+        "g_str": [
+            "SELECT other_student_details FROM Students ORDER BY other_student_details DESC",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT Cartoon.Title, Cartoon.Directed_by FROM Cartoon JOIN TV_Channel ON Cartoon.Channel = TV_Channel.id ORDER BY TV_series.Air_Date",
+        "g_str": [
+            "SELECT title ,  Directed_by FROM Cartoon ORDER BY Original_air_date",
+            "tvshow"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT T1.Production_code, T2.series_name FROM Cartoon AS T1 JOIN TV_Channel AS T2 ON T1.Channel = T2.id ORDER BY T1.Original_air_date DESC LIMIT 1",
+        "g_str": [
+            "select production_code ,  channel from cartoon order by original_air_date desc limit 1",
+            "tvshow"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT count(DISTINCT state) FROM AREA_CODE_STATE",
+        "g_str": [
+            "SELECT count(*) FROM area_code_state",
+            "voter_1"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "select contestant_number, contestant_name from contestants where contestant_number = (select contestant_number from votes group by contestant_number having count(*) = (select min(vote_count) from (select contestant_number, count(*) from votes group by contestant_number)))",
+        "g_str": [
+            "SELECT T1.contestant_number , T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number  =  T2.contestant_number GROUP BY T1.contestant_number ORDER BY count(*) ASC LIMIT 1",
+            "voter_1"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT cost_of_treatment, treatment_type_description FROM Treatments",
+        "g_str": [
+            "SELECT T1.cost_of_treatment ,  T2.treatment_type_description FROM Treatments AS T1 JOIN treatment_types AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code",
+            "dog_kennels"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT O.first_name, O.last_name, S.size_description  FROM Owners AS O  JOIN Dogs AS D ON O.owner_id = D.owner_id  JOIN Sizes AS S ON D.size_code = S.size_code",
+        "g_str": [
+            "SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id",
+            "dog_kennels"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT D.name, T.date_of_treatment FROM Dogs AS D JOIN Breeds AS B ON D.breed_code = B.breed_code JOIN Treatments AS T ON D.dog_id = T.dog_id WHERE B.breed_name = (SELECT breed_name FROM Breeds ORDER BY COUNT(*) ASC LIMIT 1)",
+        "g_str": [
+            "SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )",
+            "dog_kennels"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT D.name, T.date_of_treatment FROM Dogs AS D JOIN Breeds AS B ON D.breed_code = B.breed_code JOIN Treatments AS T ON D.dog_id = T.dog_id WHERE B.breed_name = (SELECT breed_name FROM Breeds ORDER BY breed_code LIMIT 1)",
+        "g_str": [
+            "SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )",
+            "dog_kennels"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT last_name FROM Owners WHERE owner_id = (SELECT owner_id FROM Dogs WHERE date_of_birth = (SELECT MIN(date_of_birth) FROM Dogs))",
+        "g_str": [
+            "SELECT T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T2.age  =  ( SELECT max(age) FROM Dogs )",
+            "dog_kennels"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT count(*) FROM Treatments",
+        "g_str": [
+            "SELECT count(DISTINCT dog_id) FROM Treatments",
+            "dog_kennels"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT T1.first_name, T2.treatment_type_description FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id",
+        "g_str": [
+            "SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code",
+            "dog_kennels"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT T1.first_name, T3.treatment_type_description FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id = T2.professional_id JOIN Treatment_Types AS T3 ON T2.treatment_type_code = T3.treatment_type_code",
+        "g_str": [
+            "SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code",
+            "dog_kennels"
+        ],
+        "hardness": "medium"
+    }
+]

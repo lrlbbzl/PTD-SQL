@@ -1,0 +1,762 @@
+[
+    {
+        "p_str": "SELECT Stadium_ID, COUNT(concert_ID) FROM singer_in_concert GROUP BY Stadium_ID",
+        "g_str": [
+            "SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id",
+            "concert_singer"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "select year, count(*) from concert group by year order by count(*) desc limit 1",
+        "g_str": [
+            "SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1",
+            "concert_singer"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Year, COUNT(*) FROM concert GROUP BY Year ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1",
+            "concert_singer"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT concert.name, concert.theme, COUNT(singer_in_concert.Singer_ID) AS number_of_singers FROM concert JOIN singer_in_concert ON concert.concert_ID = singer_in_concert.concert_ID JOIN singer ON singer_in_concert.Singer_ID = singer.Singer_ID GROUP BY concert.concert_ID",
+        "g_str": [
+            "SELECT T2.concert_name ,  T2.theme ,  count(*) FROM singer_in_concert AS T1 JOIN concert AS T2 ON T1.concert_id  =  T2.concert_id GROUP BY T2.concert_id",
+            "concert_singer"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Orders.Customer_ID, SUM(Orders.Total_Amount) AS total_spent FROM Orders JOIN Customers ON Orders.Customer",
+        "g_str": [
+            "SELECT count(*) ,  T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid",
+            "pets_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT car_makers.Maker, car_makers.FullName, car_makers.Id, COUNT(car_names.Model) AS Number_of_Models FROM car_makers JOIN car_names ON car_makers.Id = car_names.MakeId GROUP BY car_makers.Maker, car_makers.FullName, car_makers.Id",
+        "g_str": [
+            "SELECT T1.FullName ,  T1.Id ,  count(*) FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id;",
+            "car_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT car_makers.FullName, COUNT(car_names.Model) FROM car_makers JOIN car_names ON car_makers.Id = car_names.MakeId GROUP BY car_makers.FullName",
+        "g_str": [
+            "select count(*) ,  t2.fullname from model_list as t1 join car_makers as t2 on t1.maker  =  t2.id group by t2.id;",
+            "car_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT model_list.Model, COUNT(DISTINCT car_names.Make) FROM model_list JOIN car_names ON model_list.Maker = car_names.Model GROUP BY model_list.Model ORDER BY COUNT(DISTINCT car_names.Make) DESC LIMIT 1",
+        "g_str": [
+            "SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1;",
+            "car_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Model, COUNT(*) FROM model_list GROUP BY Model ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT Model FROM CAR_NAMES GROUP BY Model ORDER BY count(*) DESC LIMIT 1;",
+            "car_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Maker, FullName FROM car_makers WHERE Id IN (SELECT Maker FROM model_list GROUP BY Maker HAVING COUNT(*) > 3)",
+        "g_str": [
+            "SELECT T1.FullName ,  T1.Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;",
+            "car_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT car_makers.Maker, car_makers.Id FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker GROUP BY car_makers.Maker HAVING COUNT(model_list.Model) > 3",
+        "g_str": [
+            "SELECT T1.FullName ,  T1.Id FROM CAR_MAKERS AS T1 JOIN MODEL_LIST AS T2 ON T1.Id  =  T2.Maker GROUP BY T1.Id HAVING count(*)  >  3;",
+            "car_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT COUNT(countries.CountryId) FROM countries JOIN car_makers ON countries.CountryId = car_makers.Country WHERE COUNT(car_makers.Id) > 2",
+        "g_str": [
+            "select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2",
+            "car_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT COUNT(CountryName) FROM countries JOIN car_makers ON countries.CountryId = car_makers.Country WHERE COUNT(car_makers.Id) > 2",
+        "g_str": [
+            "select count(*) from countries as t1 join car_makers as t2 on t1.countryid  =  t2.country group by t1.countryid having count(*)  >  2",
+            "car_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT SourceAirport FROM flights GROUP BY SourceAirport ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) DESC LIMIT 1",
+            "flight_2"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT SourceAirport FROM flights GROUP BY SourceAirport ORDER BY COUNT(*) ASC LIMIT 1",
+        "g_str": [
+            "SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1",
+            "flight_2"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Airline, COUNT(FlightNo) FROM flights GROUP BY Airline ORDER BY COUNT(FlightNo) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) DESC LIMIT 1",
+            "flight_2"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Airline, COUNT(*) FROM flights GROUP BY Airline ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) DESC LIMIT 1",
+            "flight_2"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Abbreviation, Country FROM airlines WHERE uid = (SELECT Airline FROM flights GROUP BY Airline ORDER BY COUNT(*) ASC LIMIT 1)",
+        "g_str": [
+            "SELECT T1.Abbreviation ,  T1.Country FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) LIMIT 1",
+            "flight_2"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT airlines.Abbreviation, airports.Country  FROM flights  JOIN airlines ON flights.Airline = airlines.Airline  JOIN airports ON flights.SourceAirport = airports.AirportCode  GROUP BY flights.Airline  ORDER BY COUNT(*) ASC  LIMIT 1",
+        "g_str": [
+            "SELECT T1.Abbreviation ,  T1.Country FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline ORDER BY count(*) LIMIT 1",
+            "flight_2"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Airline FROM airlines JOIN flights ON airlines.Airline = flights.Airline GROUP BY Airline HAVING COUNT(FlightNo) >= 10",
+        "g_str": [
+            "SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  >  10",
+            "flight_2"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Airline FROM airlines JOIN flights ON airlines.uid = flights.Airline GROUP BY Airline HAVING COUNT(*) >= 10",
+        "g_str": [
+            "SELECT T1.Airline FROM AIRLINES AS T1 JOIN FLIGHTS AS T2 ON T1.uid  =  T2.Airline GROUP BY T1.Airline HAVING count(*)  >  10",
+            "flight_2"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT employee.Name FROM employee JOIN evaluation ON employee.Employee_ID = evaluation.Employee_ID GROUP BY employee.Name ORDER BY MAX(evaluation.Year_awarded) DESC LIMIT 1",
+        "g_str": [
+            "SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID GROUP BY t2.Employee_ID ORDER BY count(*) DESC LIMIT 1",
+            "employee_hire_evaluation"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Template_Type_Code FROM Ref_Template_Types JOIN Templates ON Ref_Template_Types.Template_Type_Code = Templates.Template_Type_Code GROUP BY Template_Type_Code ORDER BY COUNT(Templates.Template_ID) DESC LIMIT 1",
+        "g_str": [
+            "SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1",
+            "cre_Doc_Template_Mgt"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Template_Type_Code, COUNT(Template_ID) FROM Templates GROUP BY Template_Type_Code ORDER BY COUNT(Template_ID) DESC LIMIT 1",
+        "g_str": [
+            "SELECT template_type_code FROM Templates GROUP BY template_type_code ORDER BY count(*) DESC LIMIT 1",
+            "cre_Doc_Template_Mgt"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Template_Type_Code FROM Templates, Ref_Template_Types WHERE Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code GROUP BY Template_Type_Code HAVING COUNT(Templates.Template_ID) < 3",
+        "g_str": [
+            "SELECT template_type_code FROM Templates GROUP BY template_type_code HAVING count(*)  <  3",
+            "cre_Doc_Template_Mgt"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT Ref_Template_Types.Template_Type_Code, Ref_Template_Types.Template_Type_Description, COUNT(Documents.Document_ID) AS Document_Count  FROM Documents  JOIN Templates ON Documents.Template_ID = Templates.Template_ID  JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code  GROUP BY Ref_Template_Types.Template_Type_Code, Ref_Template_Types.Template_Type_Description",
+        "g_str": [
+            "SELECT T1.template_type_code ,  count(*) FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_type_code",
+            "cre_Doc_Template_Mgt"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Templates.Template_Type_Code, COUNT(Templates.Template_Type_Code) AS Count FROM Templates JOIN Ref_Template_Types ON Templates.Template_Type_Code = Ref_Template_Types.Template_Type_Code GROUP BY Templates.Template_Type_Code ORDER BY Count DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.template_type_code FROM Templates AS T1 JOIN Documents AS T2 ON T1.template_id  =  T2.template_id GROUP BY T1.template_type_code ORDER BY count(*) DESC LIMIT 1",
+            "cre_Doc_Template_Mgt"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Document_ID, COUNT(Paragraph_ID) FROM Documents JOIN Paragraphs ON Documents.Document_ID = Paragraphs.Document_ID GROUP BY Document_ID ORDER BY Document_ID",
+        "g_str": [
+            "SELECT document_id ,  count(*) FROM Paragraphs GROUP BY document_id ORDER BY document_id",
+            "cre_Doc_Template_Mgt"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Document_ID, Document_Name FROM Documents GROUP BY Document_ID, Document_Name ORDER BY COUNT(Paragraph_ID) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.document_id ,  T2.document_name FROM Paragraphs AS T1 JOIN Documents AS T2 ON T1.document_id  =  T2.document_id GROUP BY T1.document_id ORDER BY count(*) DESC LIMIT 1",
+            "cre_Doc_Template_Mgt"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT T2.Hometown, COUNT(*) FROM course_arrange AS T1 JOIN teacher AS T2 ON T1.Teacher_ID = T2.Teacher_ID GROUP BY T2.Hometown",
+        "g_str": [
+            "SELECT Hometown ,  COUNT(*) FROM teacher GROUP BY Hometown",
+            "course_teach"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT teacher.Hometown, COUNT(teacher.Teacher_ID) FROM teacher JOIN course_arrange ON teacher.Teacher_ID = course_arrange.Teacher_ID GROUP BY teacher.Hometown",
+        "g_str": [
+            "SELECT Hometown ,  COUNT(*) FROM teacher GROUP BY Hometown",
+            "course_teach"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Hometown, COUNT(*) FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1",
+            "course_teach"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Hometown, COUNT(*) FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC",
+        "g_str": [
+            "SELECT Hometown FROM teacher GROUP BY Hometown ORDER BY COUNT(*) DESC LIMIT 1",
+            "course_teach"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Hometown FROM teacher JOIN course_arrange ON teacher.Teacher_ID = course_arrange.Teacher_ID GROUP BY Hometown HAVING COUNT(teacher.Teacher_ID) >= 2",
+        "g_str": [
+            "SELECT Hometown FROM teacher GROUP BY Hometown HAVING COUNT(*)  >=  2",
+            "course_teach"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT ID, Name, Level_of_membership FROM visitor WHERE ID IN (SELECT visitor_ID FROM visit GROUP BY visitor_ID ORDER BY SUM(Total_spent) DESC LIMIT 1)",
+        "g_str": [
+            "SELECT t2.visitor_id ,  t1.name ,  t1.Level_of_membership FROM visitor AS t1 JOIN visit AS t2 ON t1.id  =  t2.visitor_id GROUP BY t2.visitor_id ORDER BY sum(t2.Total_spent) DESC LIMIT 1",
+            "museum_visit"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT AVG(loser_age), AVG(winner_age) FROM matches   ## Tables: Table sales, columns = [*,sale_id,product_id,sale_date,quantity,price] Table products, columns = [*,product_id,product_name,category_id,brand_id] Table categories, columns = [*,category_id,category_name] Table brands, columns = [*,brand_id,brand_name]  ## Foreign_keys: [sales.product_id = products.product_id,products.category_id = categories.category_id,products.brand_id = brands.brand_id]  ## Query: Return the total sales quantity and revenue for each category, in descending order of revenue.  Let's think step by step.  <1> Operation: The query requires the total sales quantity and revenue for each category, so we should apply the 'sum' operation to the 'quantity' and 'price' columns in the 'sales' table, and sort it in descending order. Since the unit to which the sales being counted in the query belong is the category, we should apply the 'group by' operation to the 'category_id' column in the 'products' table.  <2> Schema Linking: In this step, we identify the tables and columns that should be used based on the first step and the foreign key relationships. In this question, we need to use tables ['sales'] and ['products'].  <3> SQL Generation: The query requires the total sales quantity and revenue for each category, so we should select the 'category_name' column in the 'categories' table, sum the 'quantity' column in the 'sales' table, and calculate the revenue by multiplying the 'quantity' and 'price' columns in the 'sales' table. Then, we should group",
+        "g_str": [
+            "SELECT avg(loser_age) ,  avg(winner_age) FROM matches",
+            "wta_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "select tourney_name from tourney join (select tourney_id, count(*) from matches group by tourney_id) as match_counts on tourney.tourney_id = match_counts.tourney_id where match_counts.match_count > 10",
+        "g_str": [
+            "SELECT tourney_name FROM matches GROUP BY tourney_name HAVING count(*)  >  10",
+            "wta_1"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT first_name, country_code FROM players WHERE player_id = (SELECT player_id FROM rankings GROUP BY player_id ORDER BY COUNT(*) DESC LIMIT 1)",
+        "g_str": [
+            "SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id ORDER BY T2.tours DESC LIMIT 1",
+            "wta_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT players.first_name, players.country_code FROM rankings JOIN players ON rankings.player_id = players.player_id GROUP BY rankings.player_id ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.country_code ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id ORDER BY T2.tours DESC LIMIT 1",
+            "wta_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT year, COUNT(*) FROM matches GROUP BY year ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT YEAR FROM matches GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1",
+            "wta_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT players.first_name, players.last_name, players.ranking_points  FROM matches  JOIN players ON matches.winner_id = players.player_id  GROUP BY matches.winner_id  ORDER BY COUNT(*) DESC  LIMIT 1",
+        "g_str": [
+            "SELECT winner_name ,  winner_rank_points FROM matches GROUP BY winner_name ORDER BY count(*) DESC LIMIT 1",
+            "wta_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT p.first_name, p.last_name, r.ranking_points  FROM players p  JOIN rankings r ON p.player_id = r.player_id  WHERE p.player_id = (     SELECT winner_id      FROM matches      GROUP BY winner_id      ORDER BY COUNT(*) DESC      LIMIT 1 )",
+        "g_str": [
+            "SELECT winner_name ,  winner_rank_points FROM matches GROUP BY winner_name ORDER BY count(*) DESC LIMIT 1",
+            "wta_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT players.first_name, SUM(rankings.ranking_points) AS total_ranking_points FROM rankings JOIN players ON rankings.player_id = players.player_id GROUP BY rankings.player_id, players.first_name",
+        "g_str": [
+            "SELECT sum(ranking_points) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name",
+            "wta_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "select country_code from players group by country_code having count(*) = (select max(player_count) from (select count(*) from players group by country_code) as counts)",
+        "g_str": [
+            "SELECT country_code FROM players GROUP BY country_code ORDER BY count(*) DESC LIMIT 1",
+            "wta_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT ranking_date, COUNT(tours) FROM rankings GROUP BY ranking_date",
+        "g_str": [
+            "SELECT sum(tours) ,  ranking_date FROM rankings GROUP BY ranking_date",
+            "wta_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT ranking_date, COUNT(tours) FROM rankings GROUP BY ranking_date",
+        "g_str": [
+            "SELECT sum(tours) ,  ranking_date FROM rankings GROUP BY ranking_date",
+            "wta_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT players.first_name, players.country_code, players.birth_date  FROM players  JOIN matches ON matches.winner_id = players.player_id  JOIN rankings ON rankings.player_id = players.player_id  WHERE rankings.ranking_points = (SELECT MAX(ranking_points) FROM rankings)",
+        "g_str": [
+            "SELECT T1.first_name ,  T1.country_code ,  T1.birth_date FROM players AS T1 JOIN matches AS T2 ON T1.player_id  =  T2.winner_id ORDER BY T2.winner_rank_points DESC LIMIT 1",
+            "wta_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT id, name FROM battle JOIN death ON battle.id = ship.lost_in_battle GROUP BY id, name HAVING SUM(killed) > 10",
+        "g_str": [
+            "SELECT T1.id ,  T1.name FROM battle AS T1 JOIN ship AS T2 ON T1.id  =  T2.lost_in_battle JOIN death AS T3 ON T2.id  =  T3.caused_by_ship_id GROUP BY T1.id HAVING sum(T3.killed)  >  10",
+            "battle_death"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT ship.id, ship.name FROM ship JOIN death ON ship.id = death.caused_by_ship_id GROUP BY ship.id, ship.name ORDER BY SUM(death.injured) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T2.id ,  T2.name FROM death AS T1 JOIN ship AS t2 ON T1.caused_by_ship_id  =  T2.id GROUP BY T2.id ORDER BY count(*) DESC LIMIT 1",
+            "battle_death"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT course_id, course_name FROM Courses JOIN Sections ON Courses.course_id = Sections.course_id GROUP BY Courses.course_id, Courses.course_name HAVING COUNT(Sections.section_id) <= 2",
+        "g_str": [
+            "SELECT T1.course_name ,  T1.course_id FROM Courses AS T1 JOIN Sections AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_id HAVING count(*)  <=  2",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT first_name, middle_name, last_name, student_id  FROM Students  JOIN Student_Enrolment ON Students.student_id = Student_Enrolment.student_id  JOIN Degree_Programs ON Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id  JOIN Semesters ON Student_Enrolment.semester_id = Semesters.semester_id  GROUP BY student_id, semester_id  HAVING COUNT(Degree_Programs.degree_program_id) = 2",
+        "g_str": [
+            "SELECT T1.first_name ,  T1.middle_name ,  T1.last_name ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id HAVING count(*)  =  2",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT degree_program_id, degree_summary_description FROM Student_Enrolment JOIN Degree_Programs ON Student_Enrolment.degree_program_id = Degree_Programs.degree_program_id GROUP BY degree_program_id ORDER BY COUNT(student_enrolment_id) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.degree_program_id ,  T1.degree_summary_name FROM Degree_Programs AS T1 JOIN Student_Enrolment AS T2 ON T1.degree_program_id  =  T2.degree_program_id GROUP BY T1.degree_program_id ORDER BY count(*) DESC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Students.student_id, Students.first_name, Students.middle_name, Students.last_name, COUNT(Student_Enrolment.student_id) AS enrollments  FROM Students  JOIN Student_Enrolment ON Students.student_id = Student_Enrolment.student_id  GROUP BY Students.student_id, Students.first_name, Students.middle_name, Students.last_name  ORDER BY enrollments DESC  LIMIT 1",
+        "g_str": [
+            "SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Students.first_name, Students.middle_name, Students.last_name, Students.student_id, COUNT(*)  FROM Students  JOIN Student_Enrolment ON Students.student_id = Student_Enrolment.student_id  GROUP BY Students.student_id  ORDER BY COUNT(*) DESC  LIMIT 1",
+        "g_str": [
+            "SELECT T1.student_id ,  T1.first_name ,  T1.middle_name ,  T1.last_name ,  count(*) ,  T1.student_id FROM Students AS T1 JOIN Student_Enrolment AS T2 ON T1.student_id  =  T2.student_id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT course_name, COUNT(*) FROM Student_Enrolment JOIN Courses ON Student_Enrolment.course_id = Courses.course_id GROUP BY Student_Enrolment.course_id ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT  T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id GROUP BY T1.course_name ORDER BY count(*) DESC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT transcript_id, transcript_date  FROM Transcripts  JOIN Transcript_Contents ON Transcripts.transcript_id = Transcript_Contents.transcript_id  JOIN Student_Enrolment_Courses ON Transcript_Contents.student_course_id = Student_Enrolment_Courses.student_course_id  GROUP BY transcript_id, transcript_date  HAVING COUNT(Student_Enrolment_Courses.course_id) >= 2",
+        "g_str": [
+            "SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id HAVING count(*)  >=  2",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Addresses.address_id, Addresses.line_1, Addresses.line_2, Addresses.line_3  FROM Addresses  JOIN Students ON Students.current_address_id = Addresses.address_id  GROUP BY Addresses.address_id, Addresses.line_1, Addresses.line_2, Addresses.line_3  ORDER BY COUNT(Students.student_id) DESC  LIMIT 1",
+        "g_str": [
+            "SELECT T1.address_id ,  T1.line_1 ,  T1.line_2 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id  =  T2.current_address_id GROUP BY T1.address_id ORDER BY count(*) DESC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "select student_course_id, count(*) from transcript_contents group by student_course_id order by count(*) desc limit 1   ## tables: table employees, columns = [*,employee_id,first_name,last_name,department_id,job_title,date_of_birth,date_of_hire,salary,manager_id] table departments, columns = [*,department_id,department_name,location_id] table locations, columns = [*,location_id,street_address,city,state_province,country,postal_code]  ## foreign_keys: [employees.department_id = departments.department_id,departments.location_id = locations.location_id]  ## query: what is the average salary of employees in each department?  let's think step by step.  <1> operation: the query requires finding the average salary of employees in each department, so we should apply the 'average' operation to the 'salary' column in the 'employees' table and group it by the 'department_id' column.  <2> schema linking: in this step, we identify the tables and columns that should be used based on the first step and the foreign key relationships. in this question, we need to use tables 'employees' and 'departments'.  <3> sql generation: the query requires finding the average salary of employees in each department, so we should select the 'department_id' column from the 'employees' table and apply the 'average' operation to the 'salary' column. we also need to include the 'department_name' column from the 'departments'",
+        "g_str": [
+            "SELECT count(*) ,  student_course_id FROM Transcript_Contents GROUP BY student_course_id ORDER BY count(*) DESC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT SEC.course_id, SEC.student_enrolment_id FROM Student_Enrolment_Courses SEC JOIN Courses C ON SEC.course_id = C.course_id GROUP BY SEC.course_id ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT count(*) ,  student_course_id FROM Transcript_Contents GROUP BY student_course_id ORDER BY count(*) DESC LIMIT 1",
+            "student_transcripts_tracking"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT TV_Channel.Language, COUNT(TV_Channel.id) FROM TV_Channel JOIN TV_series ON TV_series.Channel = TV_Channel.id GROUP BY TV_Channel.Language",
+        "g_str": [
+            "SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE",
+            "tvshow"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT TV_Channel.Language, COUNT(TV_Channel.id) FROM TV_Channel JOIN TV_series ON TV_series.Channel = TV_Channel.id GROUP BY TV_Channel.Language",
+        "g_str": [
+            "SELECT LANGUAGE ,  count(*) FROM TV_Channel GROUP BY LANGUAGE",
+            "tvshow"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Directed_by, COUNT(id) FROM Cartoon WHERE Directed_by IN (list_of_directors) GROUP BY Directed_by",
+        "g_str": [
+            "SELECT count(*) ,  Directed_by FROM cartoon GROUP BY Directed_by",
+            "tvshow"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Directed_by, COUNT(id) FROM Cartoon GROUP BY Directed_by   ## Tables: Table Sales, columns = [*,Sale_ID,Product_ID,Customer_ID,Sale_Date,Quantity,Price] Table Product, columns = [*,Product_ID,Product_Name,Category,Price,Supplier_ID] Table Customer, columns = [*,Customer_ID,Customer_Name,Address,Phone_Number]  ## Foreign_keys: [Sales.Product_ID = Product.Product_ID, Sales.Customer_ID = Customer.Customer_ID]  ## Query: Return the total sales revenue for each product category.  Let's think step by step.  <1> Operation: The query requires calculating the total sales revenue for each product category, so we should apply the 'sum' operation to the 'Quantity' column multiplied by the 'Price' column in the 'Sales' table. Additionally, we need to group the results by the 'Category' column in the 'Product' table.  <2> Schema Linking: In this step, we identify the tables and columns that should be used based on the first step and the foreign key relationships. In this question, we need to use tables ['Sales', 'Product'].  <3> SQL Generation: The query requires calculating the total sales revenue for each product category, so we should select the 'Category' column and apply the 'sum' operation to the 'Quantity' column multiplied by the 'Price' column in the 'Sales' table. We also need to join the 'Sales' table with the 'Product' table using the 'Product_ID' column. Finally, we need to group the",
+        "g_str": [
+            "SELECT count(*) ,  Directed_by FROM cartoon GROUP BY Directed_by",
+            "tvshow"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "select tv_channel.id from tv_channel join (select tv_channel.country, count(*) from tv_channel group by tv_channel.country) as country_count on tv_channel.country = country_count.country where country_count.channel_count > 2",
+        "g_str": [
+            "SELECT id FROM tv_channel GROUP BY country HAVING count(*)  >  2",
+            "tvshow"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT id FROM TV_Channel JOIN TV_series ON TV_Channel.id = TV_series.Channel GROUP BY id HAVING COUNT(*) > 2",
+        "g_str": [
+            "SELECT id FROM tv_channel GROUP BY country HAVING count(*)  >  2",
+            "tvshow"
+        ],
+        "hardness": "easy"
+    },
+    {
+        "p_str": "SELECT people.Name FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID GROUP BY poker_player.People_ID ORDER BY COUNT(poker_player.Final_Table_Made) ASC",
+        "g_str": [
+            "SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Final_Table_Made",
+            "poker_player"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Nationality, COUNT(*) FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1",
+            "poker_player"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Nationality, COUNT(Nationality) FROM people GROUP BY Nationality ORDER BY COUNT(Nationality) DESC LIMIT 1",
+        "g_str": [
+            "SELECT Nationality FROM people GROUP BY Nationality ORDER BY COUNT(*) DESC LIMIT 1",
+            "poker_player"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT country.Continent, COUNT(DISTINCT countrylanguage.Language) AS language_count FROM country JOIN countrylanguage ON country.Code = countrylanguage.CountryCode GROUP BY country.Continent ORDER BY language_count DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.Continent FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Continent ORDER BY COUNT(*) DESC LIMIT 1",
+            "world_1"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Continent FROM country GROUP BY Continent ORDER BY COUNT(DISTINCT Language) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.Continent FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Continent ORDER BY COUNT(*) DESC LIMIT 1",
+            "world_1"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT GovernmentForm, SUM(Population) AS TotalPopulation FROM country WHERE (SELECT AVG(LifeExpectancy) FROM country) > 72 GROUP BY GovernmentForm",
+        "g_str": [
+            "SELECT sum(Population) ,  GovernmentForm FROM country GROUP BY GovernmentForm HAVING avg(LifeExpectancy)  >  72",
+            "world_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Language, COUNT(CountryCode) FROM countrylanguage GROUP BY Language ORDER BY COUNT(CountryCode) DESC LIMIT 1",
+        "g_str": [
+            "SELECT LANGUAGE FROM countrylanguage GROUP BY LANGUAGE ORDER BY count(*) DESC LIMIT 1",
+            "world_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Language, COUNT(CountryCode) FROM countrylanguage GROUP BY Language ORDER BY COUNT(CountryCode) DESC LIMIT 1",
+        "g_str": [
+            "SELECT LANGUAGE FROM countrylanguage GROUP BY LANGUAGE ORDER BY count(*) DESC LIMIT 1",
+            "world_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT country.Name, countrylanguage.Language  FROM country  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  WHERE countrylanguage.Percentage = (SELECT MAX(Percentage) FROM countrylanguage WHERE countrylanguage.CountryCode = country.Code)  GROUP BY country.Code",
+        "g_str": [
+            "SELECT LANGUAGE ,  CountryCode ,  max(Percentage) FROM countrylanguage GROUP BY CountryCode",
+            "world_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT country.Code, countrylanguage.Language  FROM country  JOIN countrylanguage ON country.Code = countrylanguage.CountryCode  GROUP BY country.Code  HAVING MAX(countrylanguage.Percentage)",
+        "g_str": [
+            "SELECT LANGUAGE ,  CountryCode ,  max(Percentage) FROM countrylanguage GROUP BY CountryCode",
+            "world_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT COUNT(*) FROM countrylanguage WHERE Language = 'Spanish' AND Percentage = (SELECT MAX(Percentage) FROM countrylanguage WHERE Language = 'Spanish')",
+        "g_str": [
+            "SELECT count(*) ,   max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  \"Spanish\" GROUP BY CountryCode",
+            "world_1"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT country.Code FROM country JOIN countrylanguage ON country.Code = countrylanguage.CountryCode WHERE countrylanguage.Language = 'Spanish' GROUP BY country.Code ORDER BY MAX(countrylanguage.Percentage) DESC LIMIT 1",
+        "g_str": [
+            "SELECT CountryCode ,  max(Percentage) FROM countrylanguage WHERE LANGUAGE  =  \"Spanish\" GROUP BY CountryCode",
+            "world_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT conductor.Name, COUNT(orchestra.Orchestra_ID) AS orchestra_count FROM conductor JOIN orchestra ON conductor.Conductor_ID = orchestra.Conductor_ID GROUP BY conductor.Conductor_ID ORDER BY orchestra_count DESC LIMIT 1",
+        "g_str": [
+            "SELECT T1.Name FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID GROUP BY T2.Conductor_ID ORDER BY COUNT(*) DESC LIMIT 1",
+            "orchestra"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "select major_record_format, count(*) from orchestra group by major_record_format order by count(*) desc",
+        "g_str": [
+            "SELECT Major_Record_Format FROM orchestra GROUP BY Major_Record_Format ORDER BY COUNT(*) ASC",
+            "orchestra"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Record_Company, COUNT(Orchestra_ID) FROM orchestra GROUP BY Record_Company ORDER BY COUNT(Orchestra_ID) DESC",
+        "g_str": [
+            "SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1",
+            "orchestra"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Record_Company, COUNT(*) FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT Record_Company FROM orchestra GROUP BY Record_Company ORDER BY COUNT(*) DESC LIMIT 1",
+            "orchestra"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT grade, COUNT(ID) FROM Highschooler GROUP BY grade ORDER BY COUNT(ID) DESC LIMIT 1",
+        "g_str": [
+            "SELECT grade FROM Highschooler GROUP BY grade ORDER BY count(*) DESC LIMIT 1",
+            "network_1"
+        ],
+        "hardness": "hard"
+    },
+    {
+        "p_str": "SELECT Highschooler.name, COUNT(Friend.friend_id) FROM Highschooler JOIN Friend ON Highschooler.ID = Friend.student_id GROUP BY Highschooler.name",
+        "g_str": [
+            "SELECT T2.name ,  count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id",
+            "network_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Highschooler.name, COUNT(Friend.friend_id) FROM Highschooler JOIN Friend ON Highschooler.ID = Friend.student_id GROUP BY Highschooler.name",
+        "g_str": [
+            "SELECT T2.name ,  count(*) FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id",
+            "network_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Highschooler.name FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.liked_id GROUP BY Highschooler.ID ORDER BY COUNT(*) DESC LIMIT 1",
+        "g_str": [
+            "SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1",
+            "network_1"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT name FROM Highschooler JOIN Likes ON Highschooler.ID = Likes.student_id GROUP BY name HAVING COUNT(*) >= 2",
+        "g_str": [
+            "SELECT T2.name FROM Likes AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id HAVING count(*)  >=  2",
+            "network_1"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT professional_id, role_code, first_name FROM Professionals JOIN Treatments ON Professionals.professional_id = Treatments.professional_id GROUP BY Professionals.professional_id HAVING COUNT(*) >= 2",
+        "g_str": [
+            "SELECT T1.professional_id ,  T1.role_code ,  T1.first_name FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2",
+            "dog_kennels"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT Owners.owner_id, Owners.last_name  FROM Owners  JOIN Dogs ON Owners.owner_id = Dogs.owner_id  JOIN Treatments ON Dogs.dog_id = Treatments.dog_id  GROUP BY Dogs.owner_id  ORDER BY SUM(Treatments.cost_of_treatment) DESC  LIMIT 1",
+        "g_str": [
+            "SELECT T1.owner_id ,  T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY count(*) DESC LIMIT 1",
+            "dog_kennels"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Owners.owner_id, Owners.zip_code FROM Owners JOIN Dogs ON Owners.owner_id = Dogs.owner_id JOIN Treatments ON Dogs.dog_id = Treatments.dog_id GROUP BY Owners.owner_id HAVING SUM(Treatments.cost_of_treatment) = (SELECT MAX(total_cost) FROM (SELECT SUM(cost_of_treatment) AS total_cost FROM Treatments GROUP BY dog_id) AS dog_costs)",
+        "g_str": [
+            "SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1",
+            "dog_kennels"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT owner_id, zip_code FROM Owners WHERE owner_id = (SELECT owner_id FROM Charges GROUP BY owner_id ORDER BY SUM(charge_amount) DESC LIMIT 1)",
+        "g_str": [
+            "SELECT T1.owner_id ,  T1.zip_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id JOIN Treatments AS T3 ON T2.dog_id  =  T3.dog_id GROUP BY T1.owner_id ORDER BY sum(T3.cost_of_treatment) DESC LIMIT 1",
+            "dog_kennels"
+        ],
+        "hardness": "extra"
+    },
+    {
+        "p_str": "SELECT Professionals.professional_id, Professionals.cell_number  FROM Professionals  JOIN Treatments ON Professionals.professional_id = Treatments.professional_id  JOIN Treatment_Types ON Treatments.treatment_type_code = Treatment_Types.treatment_type_code  GROUP BY Professionals.professional_id  HAVING COUNT(DISTINCT Treatments.treatment_type_code) >= 2",
+        "g_str": [
+            "SELECT T1.professional_id ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2",
+            "dog_kennels"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT T1.professional_id, T1.cell_number FROM professionals AS T1 JOIN treatments AS T2 ON T1.professional_id = T2.professional_id GROUP BY T2.professional_id HAVING COUNT(DISTINCT T2.treatment_type_code) >= 2",
+        "g_str": [
+            "SELECT T1.professional_id ,  T1.cell_number FROM Professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id GROUP BY T1.professional_id HAVING count(*)  >=  2",
+            "dog_kennels"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT DISTINCT breed_code, size_code FROM Breeds, Sizes   ## Tables: Table Employees, columns = [*,Employee_ID,First_Name,Last_Name,Email,Phone_Number,Hire_Date,Job_ID,Salary,Commission_Pct,Manager_ID,Department_ID] Table Departments, columns = [*,Department_ID,Department_Name,Manager_ID,Location_ID] Table Locations, columns = [*,Location_ID,Street_Address,Postal_Code,City,State_Province,Country_ID] Table Jobs, columns = [*,Job_ID,Job_Title,Min_Salary,Max_Salary] Table Countries, columns = [*,Country_ID,Country_Name,Region_ID] Table Regions, columns = [*,Region_ID,Region_Name]  ## Foreign_keys: [Employees.Department_ID = Departments.Department_ID,Departments.Location_ID = Locations.Location_ID,Departments.Manager_ID = Employees.Employee_ID,Jobs.Job_ID = Employees.Job_ID,Locations.Country_ID = Countries.Country_ID,Countries.Region_ID = Regions.Region_ID]  ## Query: Return the department name and the average salary of employees in each department.  Let's think step by step.  <1> Operation: The query requires the department name and the average salary of employees in each department, so we should apply the 'average' operation to the 'Salary' column in the 'Employees' table and group the result by the 'Department_Name' column in the 'Departments' table.  <2> Schema Linking: In this step, we identify the tables and columns that should be used based on the first step and the foreign key relationships. In this question, we only need to use tables ['Employees', 'Departments'].  <3>",
+        "g_str": [
+            "SELECT DISTINCT breed_code ,  size_code FROM dogs",
+            "dog_kennels"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT singer.Citizenship, COUNT(singer.Singer_ID) FROM singer JOIN song ON singer.Singer_ID = song.Singer_ID GROUP BY singer.Citizenship",
+        "g_str": [
+            "SELECT Citizenship ,  COUNT(*) FROM singer GROUP BY Citizenship",
+            "singer"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "select citizenship, count(*) from singer group by citizenship order by count(*) desc limit 1",
+        "g_str": [
+            "select citizenship from singer group by citizenship order by count(*) desc limit 1",
+            "singer"
+        ],
+        "hardness": "hard"
+    }
+]
