@@ -1,0 +1,273 @@
+SELECT count(*) FROM singer	concert_singer
+SELECT count(*) FROM singer	concert_singer
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC	concert_singer
+SELECT name ,  country ,  age FROM singer ORDER BY age DESC	concert_singer
+SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'	concert_singer
+SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'	concert_singer
+SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1	concert_singer
+select max(capacity), average from stadium	concert_singer
+select avg(capacity) ,  max(capacity) from stadium	concert_singer
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1	concert_singer
+SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1	concert_singer
+select t2.concert_name ,  t2.theme ,  count(*) from singer_in_concert as t1 join concert as t2 on t1.concert_id  =  t2.concert_id group by t2.concert_id	concert_singer
+select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)	concert_singer
+select count(*) from concert where stadium_id = (select stadium_id from stadium order by capacity desc limit 1)	concert_singer
+SELECT weight FROM pets WHERE PetType = 'dog' ORDER BY pet_age LIMIT 1	pets_1
+SELECT weight FROM pets ORDER BY pet_age LIMIT 1	pets_1
+SELECT count(DISTINCT pettype) FROM pets	pets_1
+SELECT count(DISTINCT pettype) FROM pets	pets_1
+SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1	pets_1
+SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1	pets_1
+SELECT count(*) FROM CONTINENTS;	car_1
+SELECT count(*) FROM CONTINENTS;	car_1
+SELECT count(*) FROM COUNTRIES;	car_1
+SELECT count(*) FROM COUNTRIES;	car_1
+SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;	car_1
+SELECT T1.Model FROM CAR_NAMES AS T1 JOIN CARS_DATA AS T2 ON T1.MakeId  =  T2.Id ORDER BY T2.horsepower ASC LIMIT 1;	car_1
+SELECT Count(*) ,  T2.FullName ,  T2.id FROM MODEL_LIST AS T1 JOIN CAR_MAKERS AS T2 ON T1.Maker  =  T2.Id GROUP BY T2.id;	car_1
+SELECT Maker ,  Model FROM MODEL_LIST;	car_1
+SELECT Maker ,  Model FROM MODEL_LIST;	car_1
+SELECT T1.CountryName ,  T1.CountryId FROM COUNTRIES AS T1 JOIN CAR_MAKERS AS T2 ON T1.CountryId  =  T2.Country GROUP BY T1.CountryId HAVING count(*)  >=  1;	car_1
+SELECT avg(Weight) ,  YEAR FROM CARS_DATA GROUP BY YEAR;	car_1
+select t1.model from car_names as t1 join cars_data as t2 on t1.makeid  =  t2.id order by t2.mpg desc limit 1;	car_1
+SELECT count(*) FROM CARS_DATA WHERE YEAR  =  1980;	car_1
+SELECT T1.horsepower FROM CARS_DATA AS T1 ORDER BY T1.accelerate DESC LIMIT 1;	car_1
+SELECT T1.horsepower FROM CARS_DATA AS T1 ORDER BY T1.accelerate DESC LIMIT 1;	car_1
+SELECT Airline ,  Abbreviation FROM AIRLINES WHERE Country  =  "USA"	flight_2
+SELECT count(*) FROM AIRLINES	flight_2
+SELECT count(*) FROM AIRLINES	flight_2
+SELECT count(*) FROM AIRPORTS	flight_2
+SELECT count(*) FROM AIRPORTS	flight_2
+SELECT count(*) FROM FLIGHTS	flight_2
+SELECT count(*) FROM FLIGHTS	flight_2
+SELECT T1.AirportCode FROM AIRPORTS AS T1 JOIN FLIGHTS AS T2 ON T1.AirportCode  =  T2.DestAirport OR T1.AirportCode  =  T2.SourceAirport GROUP BY T1.AirportCode ORDER BY count(*) LIMIT 1	flight_2
+SELECT count(*) FROM employee	employee_hire_evaluation
+SELECT count(*) FROM employee	employee_hire_evaluation
+SELECT name FROM employee ORDER BY age	employee_hire_evaluation
+SELECT name FROM employee ORDER BY age	employee_hire_evaluation
+SELECT manager_name ,  district FROM shop ORDER BY number_products DESC LIMIT 1	employee_hire_evaluation
+SELECT min(Number_products) ,  max(Number_products) FROM shop	employee_hire_evaluation
+SELECT min(Number_products) ,  max(Number_products) FROM shop	employee_hire_evaluation
+SELECT name ,  LOCATION ,  district FROM shop ORDER BY number_products DESC	employee_hire_evaluation
+SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID ORDER BY t2.bonus DESC LIMIT 1	employee_hire_evaluation
+SELECT t1.name FROM employee AS t1 JOIN evaluation AS t2 ON t1.Employee_ID  =  t2.Employee_ID ORDER BY t2.bonus DESC LIMIT 1	employee_hire_evaluation
+SELECT sum(bonus) FROM evaluation	employee_hire_evaluation
+SELECT sum(bonus) FROM evaluation	employee_hire_evaluation
+SELECT * FROM hiring	employee_hire_evaluation
+SELECT * FROM hiring	employee_hire_evaluation
+SELECT count(DISTINCT LOCATION) FROM shop	employee_hire_evaluation
+SELECT count(DISTINCT LOCATION) FROM shop	employee_hire_evaluation
+SELECT count(*) FROM Documents	cre_Doc_Template_Mgt
+SELECT count(*) FROM Documents	cre_Doc_Template_Mgt
+SELECT document_id ,  document_name ,  document_description FROM Documents	cre_Doc_Template_Mgt
+SELECT document_id ,  document_name ,  document_description FROM Documents	cre_Doc_Template_Mgt
+SELECT count(DISTINCT template_id) FROM Documents	cre_Doc_Template_Mgt
+SELECT count(DISTINCT template_id) FROM Documents	cre_Doc_Template_Mgt
+SELECT count(*) FROM Templates	cre_Doc_Template_Mgt
+SELECT count(*) FROM Templates	cre_Doc_Template_Mgt
+SELECT template_id ,  version_number ,  template_type_code FROM Templates	cre_Doc_Template_Mgt
+SELECT template_id ,  version_number ,  template_type_code FROM Templates	cre_Doc_Template_Mgt
+SELECT DISTINCT template_type_code FROM Templates	cre_Doc_Template_Mgt
+SELECT DISTINCT template_type_code FROM Templates	cre_Doc_Template_Mgt
+SELECT min(Version_Number) ,  template_type_code FROM Templates	cre_Doc_Template_Mgt
+SELECT min(Version_Number) ,  template_type_code FROM Templates	cre_Doc_Template_Mgt
+SELECT template_type_code ,  template_type_description FROM Ref_template_types	cre_Doc_Template_Mgt
+SELECT template_type_code ,  template_type_description FROM Ref_template_types	cre_Doc_Template_Mgt
+SELECT DISTINCT T1.template_type_description FROM Ref_template_types AS T1 JOIN Templates AS T2 ON T1.template_type_code  = T2.template_type_code JOIN Documents AS T3 ON T2.Template_ID  =  T3.template_ID	cre_Doc_Template_Mgt
+SELECT count(*) FROM Paragraphs	cre_Doc_Template_Mgt
+SELECT count(*) FROM Paragraphs	cre_Doc_Template_Mgt
+SELECT count(*) FROM teacher	course_teach
+SELECT count(*) FROM teacher	course_teach
+SELECT Name FROM teacher ORDER BY Age ASC	course_teach
+SELECT Name FROM teacher ORDER BY Age ASC	course_teach
+SELECT Age ,  Hometown FROM teacher	course_teach
+SELECT Age ,  Hometown FROM teacher	course_teach
+SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID	course_teach
+SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID	course_teach
+SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID ORDER BY T3.Name	course_teach
+SELECT T3.Name ,  T2.Course FROM course_arrange AS T1 JOIN course AS T2 ON T1.Course_ID  =  T2.Course_ID JOIN teacher AS T3 ON T1.Teacher_ID  =  T3.Teacher_ID ORDER BY T3.Name	course_teach
+SELECT name FROM museum WHERE Museum_ID NOT IN (SELECT museum_id FROM visit)	museum_visit
+SELECT avg(num_of_ticket) ,  max(num_of_ticket) FROM visit	museum_visit
+SELECT count(*) FROM players	wta_1
+SELECT count(*) FROM players	wta_1
+SELECT count(*) FROM matches	wta_1
+SELECT count(*) FROM matches	wta_1
+SELECT avg(loser_age) ,  avg(winner_age) FROM matches	wta_1
+SELECT avg(winner_rank) FROM matches	wta_1
+SELECT avg(winner_rank) FROM matches	wta_1
+SELECT min(loser_rank) FROM matches	wta_1
+SELECT min(loser_rank) FROM matches	wta_1
+SELECT count(DISTINCT country_code) FROM players	wta_1
+SELECT count(DISTINCT country_code) FROM players	wta_1
+SELECT count(DISTINCT loser_name) FROM matches	wta_1
+SELECT count(DISTINCT loser_name) FROM matches	wta_1
+SELECT first_name ,  country_code FROM players ORDER BY birth_date LIMIT 1	wta_1
+SELECT first_name ,  country_code FROM players ORDER BY birth_date LIMIT 1	wta_1
+SELECT first_name ,  last_name FROM players ORDER BY birth_date	wta_1
+SELECT first_name ,  last_name FROM players ORDER BY birth_date	wta_1
+SELECT winner_name ,  loser_name FROM matches ORDER BY minutes DESC LIMIT 1	wta_1
+SELECT avg(ranking) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name	wta_1
+SELECT avg(ranking) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name	wta_1
+SELECT sum(ranking_points) ,  T1.first_name FROM players AS T1 JOIN rankings AS T2 ON T1.player_id  =  T2.player_id GROUP BY T1.first_name	wta_1
+SELECT DISTINCT winner_name ,  winner_rank FROM matches ORDER BY winner_age LIMIT 3	wta_1
+SELECT DISTINCT winner_name ,  winner_rank FROM matches ORDER BY winner_age LIMIT 3	wta_1
+SELECT name ,  tonnage FROM ship ORDER BY name DESC	battle_death
+SELECT name ,  date FROM battle	battle_death
+SELECT max(killed) ,  min(killed) FROM death	battle_death
+SELECT avg(injured) FROM death	battle_death
+SELECT count(DISTINCT RESULT) FROM battle	battle_death
+SELECT line_1 ,  line_2 FROM addresses	student_transcripts_tracking
+SELECT line_1 ,  line_2 FROM addresses	student_transcripts_tracking
+SELECT count(*) FROM Courses	student_transcripts_tracking
+SELECT count(*) FROM Courses	student_transcripts_tracking
+SELECT count(DISTINCT department_id) FROM Degree_Programs	student_transcripts_tracking
+SELECT count(DISTINCT department_id) FROM Degree_Programs	student_transcripts_tracking
+SELECT count(DISTINCT degree_summary_name) FROM Degree_Programs	student_transcripts_tracking
+SELECT count(DISTINCT degree_summary_name) FROM Degree_Programs	student_transcripts_tracking
+SELECT section_name ,  section_description FROM Sections	student_transcripts_tracking
+SELECT section_name ,  section_description FROM Sections	student_transcripts_tracking
+SELECT section_name FROM Sections ORDER BY section_name DESC	student_transcripts_tracking
+SELECT section_name FROM Sections ORDER BY section_name DESC	student_transcripts_tracking
+SELECT semester_name FROM Semesters WHERE semester_id NOT IN( SELECT semester_id FROM Student_Enrolment )	student_transcripts_tracking
+SELECT DISTINCT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id	student_transcripts_tracking
+SELECT DISTINCT T1.course_name FROM Courses AS T1 JOIN Student_Enrolment_Courses AS T2 ON T1.course_id  =  T2.course_id	student_transcripts_tracking
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1	student_transcripts_tracking
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_left ASC LIMIT 1	student_transcripts_tracking
+SELECT first_name ,  middle_name ,  last_name FROM Students ORDER BY date_left ASC LIMIT 1	student_transcripts_tracking
+SELECT avg(transcript_date) FROM Transcripts	student_transcripts_tracking
+SELECT avg(transcript_date) FROM Transcripts	student_transcripts_tracking
+SELECT transcript_date ,  other_details FROM Transcripts ORDER BY transcript_date ASC LIMIT 1	student_transcripts_tracking
+SELECT count(*) FROM Transcripts	student_transcripts_tracking
+SELECT count(*) FROM Transcripts	student_transcripts_tracking
+SELECT transcript_date FROM Transcripts ORDER BY transcript_date DESC LIMIT 1	student_transcripts_tracking
+SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id ORDER BY count(*) ASC LIMIT 1	student_transcripts_tracking
+SELECT T2.transcript_date ,  T1.transcript_id FROM Transcript_Contents AS T1 JOIN Transcripts AS T2 ON T1.transcript_id  =  T2.transcript_id GROUP BY T1.transcript_id ORDER BY count(*) ASC LIMIT 1	student_transcripts_tracking
+SELECT count(DISTINCT current_address_id) FROM Students	student_transcripts_tracking
+SELECT count(DISTINCT current_address_id) FROM Students	student_transcripts_tracking
+SELECT other_student_details FROM Students ORDER BY other_student_details DESC	student_transcripts_tracking
+SELECT other_student_details FROM Students ORDER BY other_student_details DESC	student_transcripts_tracking
+SELECT Title FROM Cartoon ORDER BY title	tvshow
+SELECT Title FROM Cartoon ORDER BY title	tvshow
+SELECT title ,  Directed_by FROM Cartoon ORDER BY Original_air_date	tvshow
+SELECT title ,  Directed_by FROM Cartoon ORDER BY Original_air_date	tvshow
+SELECT count(DISTINCT series_name) ,  count(DISTINCT content) FROM TV_Channel;	tvshow
+SELECT count(DISTINCT series_name) ,  count(DISTINCT content) FROM TV_Channel;	tvshow
+SELECT Episode FROM TV_series ORDER BY rating	tvshow
+SELECT Episode FROM TV_series ORDER BY rating	tvshow
+SELECT Episode ,  Rating FROM TV_series ORDER BY Rating DESC LIMIT 3;	tvshow
+SELECT max(SHARE) , min(SHARE) FROM TV_series;	tvshow
+SELECT max(SHARE) , min(SHARE) FROM TV_series;	tvshow
+select production_code ,  channel from cartoon order by original_air_date desc limit 1	tvshow
+select production_code ,  channel from cartoon order by original_air_date desc limit 1	tvshow
+SELECT count(*) FROM poker_player	poker_player
+SELECT count(*) FROM poker_player	poker_player
+SELECT Earnings FROM poker_player ORDER BY Earnings DESC	poker_player
+SELECT Earnings FROM poker_player ORDER BY Earnings DESC	poker_player
+SELECT Final_Table_Made ,  Best_Finish FROM poker_player	poker_player
+SELECT Final_Table_Made ,  Best_Finish FROM poker_player	poker_player
+SELECT avg(Earnings) FROM poker_player	poker_player
+SELECT avg(Earnings) FROM poker_player	poker_player
+SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1	poker_player
+SELECT Money_Rank FROM poker_player ORDER BY Earnings DESC LIMIT 1	poker_player
+SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID	poker_player
+SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID	poker_player
+SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Final_Table_Made	poker_player
+SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings ASC LIMIT 1	poker_player
+SELECT T1.Birth_Date FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings ASC LIMIT 1	poker_player
+SELECT T2.Money_Rank FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T1.Height DESC LIMIT 1	poker_player
+SELECT T2.Money_Rank FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T1.Height DESC LIMIT 1	poker_player
+SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings DESC	poker_player
+SELECT T1.Name FROM people AS T1 JOIN poker_player AS T2 ON T1.People_ID  =  T2.People_ID ORDER BY T2.Earnings DESC	poker_player
+SELECT Name ,  Birth_Date FROM people ORDER BY Name ASC	poker_player
+SELECT Name ,  Birth_Date FROM people ORDER BY Name ASC	poker_player
+SELECT count(DISTINCT Nationality) FROM people	poker_player
+SELECT count(DISTINCT Nationality) FROM people	poker_player
+SELECT count(*) FROM area_code_state	voter_1
+SELECT contestant_number ,  contestant_name FROM contestants ORDER BY contestant_name DESC	voter_1
+SELECT vote_id ,  phone_number ,  state FROM votes	voter_1
+SELECT max(area_code) ,  min(area_code) FROM area_code_state	voter_1
+SELECT DISTINCT state ,  created FROM votes	voter_1
+SELECT T1.contestant_number , T1.contestant_name FROM contestants AS T1 JOIN votes AS T2 ON T1.contestant_number  =  T2.contestant_number GROUP BY T1.contestant_number ORDER BY count(*) ASC LIMIT 1	voter_1
+SELECT count(DISTINCT LANGUAGE) FROM countrylanguage	world_1
+SELECT count(DISTINCT LANGUAGE) FROM countrylanguage	world_1
+SELECT T1.Name FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode GROUP BY T1.Name ORDER BY COUNT(*) DESC LIMIT 1	world_1
+SELECT COUNT( DISTINCT Continent) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code  =  T2.CountryCode WHERE T2.Language  =  "Chinese"	world_1
+SELECT Name ,  Population ,  LifeExpectancy FROM country WHERE Continent  =  "Asia" ORDER BY SurfaceArea DESC LIMIT 1	world_1
+SELECT Name ,  SurfaceArea ,  IndepYear FROM country ORDER BY Population LIMIT 1	world_1
+SELECT Name ,  SurfaceArea ,  IndepYear FROM country ORDER BY Population LIMIT 1	world_1
+SELECT Name ,  population ,  HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1	world_1
+SELECT Name ,  population ,  HeadOfState FROM country ORDER BY SurfaceArea DESC LIMIT 1	world_1
+SELECT Name ,  SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5	world_1
+SELECT Name ,  SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5	world_1
+SELECT Name FROM country ORDER BY Population DESC LIMIT 3	world_1
+SELECT Name FROM country ORDER BY Population DESC LIMIT 3	world_1
+SELECT Name FROM country ORDER BY Population ASC LIMIT 3	world_1
+SELECT Name FROM country ORDER BY Population ASC LIMIT 3	world_1
+SELECT count(*) FROM conductor	orchestra
+SELECT count(*) FROM conductor	orchestra
+SELECT Name FROM conductor ORDER BY Age ASC	orchestra
+SELECT Name FROM conductor ORDER BY Age ASC	orchestra
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded DESC	orchestra
+SELECT avg(Attendance) FROM SHOW	orchestra
+SELECT avg(Attendance) FROM SHOW	orchestra
+SELECT max(SHARE) ,  min(SHARE) FROM performance WHERE TYPE != "Live final"	orchestra
+SELECT count(DISTINCT Nationality) FROM conductor	orchestra
+SELECT count(DISTINCT Nationality) FROM conductor	orchestra
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC	orchestra
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC	orchestra
+SELECT Name FROM conductor ORDER BY Year_of_Work DESC LIMIT 1	orchestra
+SELECT T1.Name ,  T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID	orchestra
+SELECT T1.Name ,  T2.Orchestra FROM conductor AS T1 JOIN orchestra AS T2 ON T1.Conductor_ID  =  T2.Conductor_ID	orchestra
+SELECT Major_Record_Format FROM orchestra GROUP BY Major_Record_Format ORDER BY COUNT(*) ASC	orchestra
+SELECT count(*) FROM Highschooler	network_1
+SELECT count(*) FROM Highschooler	network_1
+SELECT name ,  grade FROM Highschooler	network_1
+SELECT name ,  grade FROM Highschooler	network_1
+SELECT grade FROM Highschooler	network_1
+SELECT grade FROM Highschooler	network_1
+SELECT T2.name FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id GROUP BY T1.student_id ORDER BY count(*) DESC LIMIT 1	network_1
+SELECT avg(grade) FROM Highschooler WHERE id IN (SELECT T1.student_id FROM Friend AS T1 JOIN Highschooler AS T2 ON T1.student_id  =  T2.id)	network_1
+SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )	dog_kennels
+SELECT avg(age) FROM Dogs WHERE dog_id IN ( SELECT dog_id FROM Treatments )	dog_kennels
+SELECT T1.treatment_type_description FROM Treatment_types AS T1 JOIN Treatments AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code GROUP BY T1.treatment_type_code ORDER BY sum(cost_of_treatment) ASC LIMIT 1	dog_kennels
+SELECT T1.date_of_treatment ,  T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id  =  T2.professional_id	dog_kennels
+SELECT T1.date_of_treatment ,  T2.first_name FROM Treatments AS T1 JOIN Professionals AS T2 ON T1.professional_id  =  T2.professional_id	dog_kennels
+SELECT T1.cost_of_treatment ,  T2.treatment_type_description FROM Treatments AS T1 JOIN treatment_types AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code	dog_kennels
+SELECT T1.cost_of_treatment ,  T2.treatment_type_description FROM Treatments AS T1 JOIN treatment_types AS T2 ON T1.treatment_type_code  =  T2.treatment_type_code	dog_kennels
+SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id	dog_kennels
+SELECT T1.first_name ,  T1.last_name ,  T2.size_code FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id	dog_kennels
+SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id	dog_kennels
+SELECT T1.first_name ,  T2.name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id	dog_kennels
+SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )	dog_kennels
+SELECT T1.name ,  T2.date_of_treatment FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id WHERE T1.breed_code  =  ( SELECT breed_code FROM Dogs GROUP BY breed_code ORDER BY count(*) ASC LIMIT 1 )	dog_kennels
+SELECT DISTINCT T1.date_arrived ,  T1.date_departed FROM Dogs AS T1 JOIN Treatments AS T2 ON T1.dog_id  =  T2.dog_id	dog_kennels
+SELECT T1.last_name FROM Owners AS T1 JOIN Dogs AS T2 ON T1.owner_id  =  T2.owner_id WHERE T2.age  =  ( SELECT max(age) FROM Dogs )	dog_kennels
+SELECT date_arrived ,  date_departed FROM Dogs	dog_kennels
+SELECT date_arrived ,  date_departed FROM Dogs	dog_kennels
+SELECT count(DISTINCT dog_id) FROM Treatments	dog_kennels
+SELECT count(DISTINCT dog_id) FROM Treatments	dog_kennels
+SELECT cost_of_treatment FROM Treatments ORDER BY date_of_treatment DESC LIMIT 1	dog_kennels
+SELECT cost_of_treatment FROM Treatments ORDER BY date_of_treatment DESC LIMIT 1	dog_kennels
+SELECT avg(age) FROM Dogs	dog_kennels
+SELECT avg(age) FROM Dogs	dog_kennels
+SELECT max(age) FROM Dogs	dog_kennels
+SELECT max(age) FROM Dogs	dog_kennels
+SELECT charge_type ,  charge_amount FROM Charges	dog_kennels
+SELECT max(charge_amount) FROM Charges	dog_kennels
+SELECT max(charge_amount) FROM Charges	dog_kennels
+SELECT email_address ,  cell_number ,  home_phone FROM professionals	dog_kennels
+SELECT email_address ,  cell_number ,  home_phone FROM professionals	dog_kennels
+SELECT DISTINCT breed_code ,  size_code FROM dogs	dog_kennels
+SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code	dog_kennels
+SELECT DISTINCT T1.first_name ,  T3.treatment_type_description FROM professionals AS T1 JOIN Treatments AS T2 ON T1.professional_id  =  T2.professional_id JOIN Treatment_types AS T3 ON T2.treatment_type_code  =  T3.treatment_type_code	dog_kennels
+SELECT count(*) FROM singer	singer
+SELECT count(*) FROM singer	singer
+SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC	singer
+SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC	singer
+SELECT Birth_Year ,  Citizenship FROM singer	singer
+SELECT Birth_Year ,  Citizenship FROM singer	singer
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1	singer
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1	singer
+SELECT T2.Title ,  T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID	singer
+SELECT T2.Title ,  T1.Name FROM singer AS T1 JOIN song AS T2 ON T1.Singer_ID  =  T2.Singer_ID	singer
+SELECT count(*) FROM Other_Available_Features	real_estate_properties

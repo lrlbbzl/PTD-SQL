@@ -1,0 +1,632 @@
+[
+    {
+        "db_id": "department_management",
+        "gold": "SELECT T3.born_state FROM department AS T1 JOIN management AS T2 ON T1.department_id  =  T2.department_id JOIN head AS T3 ON T2.head_id  =  T3.head_id WHERE T1.name  =  'Treasury' INTERSECT SELECT T3.born_state FROM department AS T1 JOIN management AS T2 ON T1.department_id  =  T2.department_id JOIN head AS T3 ON T2.head_id  =  T3.head_id WHERE T1.name  =  'Homeland Security'",
+        "question": "List the states where both the secretary of 'Treasury' department and the secretary of 'Homeland Security' were born.",
+        "fields": "Table department, columns = [*,Department_ID,Name,Creation,Ranking,Budget_in_Billions,Num_Employees]\nTable head, columns = [*,head_ID,name,born_state,age]\nTable management, columns = [*,department_ID,head_ID,temporary_acting]\n",
+        "foreign_keys": "Foreign_keys = [management.head_ID = head.head_ID,management.department_ID = department.Department_ID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what is the state where the secretary of 'Treasury' department was born; 2. what is the state where the secretary of 'Homeland Security' department was born.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete both subproblems, we need to use tables ['department', 'management', 'head'].\n\n<3> Operation: Use 'where' to filter using column 'Name' in table 'department'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T3.born_state FROM department AS T1 JOIN management AS T2 ON T1.Department_ID = T2.department_ID JOIN head AS T3 ON T2.head_ID = T3.head_ID WHERE T1.Name = \"Treasury\" INTERSECT SELECT T3.born_state FROM department AS T1 JOIN management AS T2 ON T1.Department_ID = T2.department_ID JOIN head AS T3 ON T2.head_ID = T3.head_ID WHERE T1.Name = \"Homeland Security\"",
+        "predict": ""
+    },
+    {
+        "db_id": "student_assessment",
+        "gold": "SELECT student_id FROM student_course_registrations UNION SELECT student_id FROM student_course_attendance",
+        "question": "What are the id of students who registered courses or attended courses?",
+        "fields": "Table Addresses, columns = [*,address_id,line_1,line_2,city,zip_postcode,state_province_county,country]\nTable Candidate_Assessments, columns = [*,candidate_id,qualification,assessment_date,asessment_outcome_code]\nTable Candidates, columns = [*,candidate_id,candidate_details]\nTable Courses, columns = [*,course_id,course_name,course_description,other_details]\nTable People, columns = [*,person_id,first_name,middle_name,last_name,cell_mobile_number,email_address,login_name,password]\nTable People_Addresses, columns = [*,person_address_id,person_id,address_id,date_from,date_to]\nTable Student_Course_Attendance, columns = [*,student_id,course_id,date_of_attendance]\nTable Student_Course_Registrations, columns = [*,student_id,course_id,registration_date]\nTable Students, columns = [*,student_id,student_details]\n",
+        "foreign_keys": "Foreign_keys = [Students.student_id = People.person_id,People_Addresses.address_id = Addresses.address_id,People_Addresses.person_id = People.person_id,Student_Course_Registrations.course_id = Courses.course_id,Student_Course_Registrations.student_id = Students.student_id,Student_Course_Attendance.student_id = Student_Course_Registrations.student_id,Student_Course_Attendance.course_id = Student_Course_Registrations.course_id,Candidates.candidate_id = People.person_id,Candidate_Assessments.candidate_id = Candidates.candidate_id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes union logic, so we can decompose the question into two subproblems: 1. what are the id of students who registered courses; 2. what are the id of students who attended courses.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['Students', 'Student_Course_Registrations']. To complete the second subproblem, we need to use tables ['Students', 'Student_Course_Attendance'].\n\n<3> Operation: No specific operation is needed for this query except for the basic 'SELECT' operation.\n\n<4> SQL Generation: Use 'union' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT student_id FROM Student_Course_Registrations UNION SELECT student_id FROM Student_Course_Attendance",
+        "predict": ""
+    },
+    {
+        "db_id": "student_assessment",
+        "gold": "SELECT student_id FROM student_course_registrations UNION SELECT student_id FROM student_course_attendance",
+        "question": "What are the ids of the students who either registered or attended a course?",
+        "fields": "Table Addresses, columns = [*,address_id,line_1,line_2,city,zip_postcode,state_province_county,country]\nTable Candidate_Assessments, columns = [*,candidate_id,qualification,assessment_date,asessment_outcome_code]\nTable Candidates, columns = [*,candidate_id,candidate_details]\nTable Courses, columns = [*,course_id,course_name,course_description,other_details]\nTable People, columns = [*,person_id,first_name,middle_name,last_name,cell_mobile_number,email_address,login_name,password]\nTable People_Addresses, columns = [*,person_address_id,person_id,address_id,date_from,date_to]\nTable Student_Course_Attendance, columns = [*,student_id,course_id,date_of_attendance]\nTable Student_Course_Registrations, columns = [*,student_id,course_id,registration_date]\nTable Students, columns = [*,student_id,student_details]\n",
+        "foreign_keys": "Foreign_keys = [Students.student_id = People.person_id,People_Addresses.address_id = Addresses.address_id,People_Addresses.person_id = People.person_id,Student_Course_Registrations.course_id = Courses.course_id,Student_Course_Registrations.student_id = Students.student_id,Student_Course_Attendance.student_id = Student_Course_Registrations.student_id,Student_Course_Attendance.course_id = Student_Course_Registrations.course_id,Candidates.candidate_id = People.person_id,Candidate_Assessments.candidate_id = Candidates.candidate_id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes union logic, so we can decompose the question into two subproblems: 1. what are the ids of the students who registered a course; 2. what are the ids of the students who attended a course.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['Students', 'Student_Course_Registrations']. To complete the second subproblem, we need to use tables ['Students', 'Student_Course_Attendance'].\n\n<3> Operation: For both subproblems, we need to select the 'student_id' column from the respective tables.\n\n<4> SQL Generation: Use 'union' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT student_id FROM student_course_registrations UNION SELECT student_id FROM student_course_attendance",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT id FROM station WHERE city  =  \"San Francisco\" INTERSECT SELECT station_id FROM status GROUP BY station_id HAVING avg(bikes_available)  >  10",
+        "question": "What are the ids of the stations in San Francisco that normally have more than 10 bikes available?",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query can be solved in a single step, so we don't need to decompose it further.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the query, we need to use tables ['station', 'status'].\n\n<3> Operation: We need to perform a 'GROUP BY' operation on the column 'station_id' and filter by performing 'HAVING AVG()' on the column 'bikes_available'. Additionally, we need to use 'WHERE' to filter using column 'city' in table 'station'.\n\n<4> SQL Generation: Generate the final SQL statement based on the operations and schema linking.\n\nSQL query: \nSELECT T1.id FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id WHERE T1.city = \"San Francisco\" GROUP BY T2.station_id HAVING AVG(T2.bikes_available) > 10",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT T1.name ,  T1.id FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(T2.bikes_available)  >  14 UNION SELECT name ,  id FROM station WHERE installation_date LIKE \"12/%\"",
+        "question": "What are the names and ids of stations that had more than 14 bikes available on average or were installed in December?",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes union logic, so we can decompose the question into two subproblems: 1. what are the names and ids of stations that had more than 14 bikes available on average; 2. what are the names and ids of stations that were installed in December.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['station', 'status']. To complete the second subproblem, we need to use table ['station'].\n\n<3> Operation: For the first subproblem, we need to perform a 'GROUP BY' operation on the column 'station_id' and filter by performing 'HAVING AVG()' on the column 'bikes_available'. For the second subproblem, we need to use 'LIKE' to filter using month number on the column 'installation_date'.\n\n<4> SQL Generation: Use 'union' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T1.name, T1.id FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id GROUP BY T2.station_id HAVING avg(bikes_available) > 14 UNION SELECT name, id FROM station WHERE installation_date LIKE '12/%'",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT T1.name ,  T1.id FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(T2.bikes_available)  >  14 UNION SELECT name ,  id FROM station WHERE installation_date LIKE \"12/%\"",
+        "question": "What are the names and ids of all stations that have more than 14 bikes available on average or had bikes installed in December?",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes union logic, so we can decompose the question into two subproblems: 1. what are the names and ids of all stations that have more than 14 bikes available on average; 2. what are the names and ids of all stations that had bikes installed in December.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['station', 'status']. To complete the second subproblem, we need to use table ['station'].\n\n<3> Operation: For the first subproblem, we need to perform a 'GROUP BY' operation on the column 'station_id' and filter by performing 'HAVING AVG()' on the column 'bikes_available'. For the second subproblem, we need to use 'LIKE' to filter using month number on the column 'installation_date'.\n\n<4> SQL Generation: Use 'union' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T1.name, T1.id FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id GROUP BY T1.id HAVING avg(T2.bikes_available) > 14 UNION SELECT name, id FROM station WHERE installation_date LIKE '12/%'",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT id FROM station WHERE lat  >  37.4 EXCEPT SELECT station_id FROM status GROUP BY station_id HAVING min(bikes_available)  <  7",
+        "question": "What are the ids of all stations that have a latitude above 37.4 and have never had less than 7 bikes available?",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what are the ids of all stations that have a latitude above 37.4; 2. what are the ids of all stations that have never had less than 7 bikes available.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['station']. To complete the second subproblem, we need to use tables ['station', 'status'].\n\n<3> Operation: For the first subproblem, we need to filter using 'where' to extract records where 'lat' is above 37.4. For the second subproblem, we need to perform a 'GROUP BY' operation on the column 'station_id' and filter by performing 'HAVING MIN()' on the column 'bikes_available'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT id FROM station WHERE lat > 37.4 INTERSECT SELECT T1.id FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id GROUP BY T1.id HAVING MIN(T2.bikes_available) >= 7",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id  =  T2.station_id GROUP BY T2.station_id HAVING avg(bikes_available)  >  10 EXCEPT SELECT name FROM station WHERE city  =  \"San Jose\"",
+        "question": "What are the names of all stations that have more than 10 bikes available and are not located in San Jose?",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what are the names of all stations that have more than 10 bikes available; 2. what are the names of all stations that are not located in San Jose city.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['station', 'status']. To complete the second subproblem, we need to use table ['station'].\n\n<3> Operation: For the first subproblem, we need to perform a 'GROUP BY' operation on the column 'station_id' and filter by performing 'HAVING COUNT()' on the column 'bikes_available'. For the second subproblem, we need to use 'where' to filter using column 'city' in table 'station'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T1.name FROM station AS T1 JOIN status AS T2 ON T1.id = T2.station_id GROUP BY T2.station_id HAVING avg(bikes_available) > 10 INTERSECT SELECT name FROM station WHERE city != \"San Jose\"",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT DISTINCT zip_code FROM weather EXCEPT SELECT DISTINCT zip_code FROM weather WHERE max_dew_point_f  >=  70",
+        "question": "Find all the zip codes in which the max dew point have never reached 70.",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are all the zip codes; 2. what are the zip codes in which the max dew point has reached 70.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['weather']. To complete the second subproblem, we need to use table ['weather'].\n\n<3> Operation: Use 'where' to filter using column 'max_dew_point_f' in table 'weather'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT DISTINCT zip_code FROM weather EXCEPT SELECT DISTINCT zip_code FROM weather WHERE max_dew_point_f >= 70",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT DISTINCT zip_code FROM weather EXCEPT SELECT DISTINCT zip_code FROM weather WHERE max_dew_point_f  >=  70",
+        "question": "What are all the different zip codes that have a maximum dew point that was always below 70?",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are all the different zip codes; 2. what are the zip codes that have a maximum dew point above or equal to 70.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['weather']. To complete the second subproblem, we need to use table ['weather'] as well.\n\n<3> Operation: Use 'where' to filter using column 'max_dew_point_f' in table 'weather'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT DISTINCT zip_code FROM weather EXCEPT SELECT DISTINCT zip_code FROM weather WHERE max_dew_point_f >= 70",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT zip_code FROM weather GROUP BY zip_code HAVING avg(mean_humidity)  <  70 INTERSECT SELECT zip_code FROM trip GROUP BY zip_code HAVING count(*)  >=  100",
+        "question": "Give me the zip code where the average mean humidity is below 70 and at least 100 trips took place.",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what are the zip codes where the average mean humidity is below 70; 2. what are the zip codes where at least 100 trips took place.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['weather']. To complete the second subproblem, we need to use table ['trip'].\n\n<3> Operation: For the first subproblem, we need to perform a 'GROUP BY' operation on the column 'zip_code' and filter by performing 'HAVING AVG()' on the column 'mean_humidity'. For the second subproblem, we need to perform a 'GROUP BY' operation on the column 'zip_code' and filter by performing 'HAVING COUNT()' on the column 'id'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT zip_code FROM weather GROUP BY zip_code HAVING AVG(mean_humidity) < 70 INTERSECT SELECT zip_code FROM trip GROUP BY zip_code HAVING COUNT(id) >= 100",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT zip_code FROM weather GROUP BY zip_code HAVING avg(mean_humidity)  <  70 INTERSECT SELECT zip_code FROM trip GROUP BY zip_code HAVING count(*)  >=  100",
+        "question": "What are the zip codes that have an average mean humidity below 70 and had at least 100 trips come through there?",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what are the zip codes that have an average mean humidity below 70; 2. what are the zip codes that had at least 100 trips come through there.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['weather']. To complete the second subproblem, we need to use tables ['trip'].\n\n<3> Operation: For the first subproblem, we need to perform a 'GROUP BY' operation on the column 'zip_code' and filter by performing 'HAVING AVG()' on the column 'mean_humidity'. For the second subproblem, we need to perform a 'GROUP BY' operation on the column 'zip_code' and filter by performing 'HAVING COUNT()' on the column 'id'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT zip_code FROM weather GROUP BY zip_code HAVING avg(mean_humidity) < 70 INTERSECT SELECT zip_code FROM trip GROUP BY zip_code HAVING count(*) >= 100",
+        "predict": ""
+    },
+    {
+        "db_id": "bike_1",
+        "gold": "SELECT name FROM station WHERE city  =  \"Palo Alto\" EXCEPT SELECT end_station_name FROM trip GROUP BY end_station_name HAVING count(*)  >  100",
+        "question": "What are the names of the stations that are located in Palo Alto but have never been the ending point of the trips",
+        "fields": "Table station, columns = [*,id,name,lat,long,dock_count,city,installation_date]\nTable status, columns = [*,station_id,bikes_available,docks_available,time]\nTable trip, columns = [*,id,duration,start_date,start_station_name,start_station_id,end_date,end_station_name,end_station_id,bike_id,subscription_type,zip_code]\nTable weather, columns = [*,date,max_temperature_f,mean_temperature_f,min_temperature_f,max_dew_point_f,mean_dew_point_f,min_dew_point_f,max_humidity,mean_humidity,min_humidity,max_sea_level_pressure_inches,mean_sea_level_pressure_inches,min_sea_level_pressure_inches,max_visibility_miles,mean_visibility_miles,min_visibility_miles,max_wind_Speed_mph,mean_wind_speed_mph,max_gust_speed_mph,precipitation_inches,cloud_cover,events,wind_dir_degrees,zip_code]\n",
+        "foreign_keys": "Foreign_keys = [status.station_id = station.id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are the names of stations that are located in Palo Alto; 2. what are the names of stations that have been the ending point of the trips.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['station']. To complete the second subproblem, we need to use tables ['station', 'trip'].\n\n<3> Operation: Use 'where' to filter using column 'city' in table 'station' for the first subproblem. For the second subproblem, use 'where' to filter using column 'end_station_name' in table 'trip'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT name FROM station WHERE city = 'Palo Alto' EXCEPT SELECT end_station_name FROM trip",
+        "predict": ""
+    },
+    {
+        "db_id": "musical",
+        "gold": "SELECT Nominee FROM musical WHERE Award  =  \"Tony Award\" INTERSECT SELECT Nominee FROM musical WHERE Award  =  \"Drama Desk Award\"",
+        "question": "Show the nominees that have nominated musicals for both \"Tony Award\" and \"Drama Desk Award\".",
+        "fields": "Table actor, columns = [*,Actor_ID,Name,Musical_ID,Character,Duration,age]\nTable musical, columns = [*,Musical_ID,Name,Year,Award,Category,Nominee,Result]\n",
+        "foreign_keys": "Foreign_keys = [actor.Musical_ID = actor.Actor_ID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what are the nominees that have nominated musicals for \"Tony Award\"; 2. what are the nominees that have nominated musicals for \"Drama Desk Award\".\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table 'musical'. To complete the second subproblem, we need to use table 'musical' in the same reason.\n\n<3> Operation: Use 'where' to filter using column 'Award' in table 'musical'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT Nominee FROM musical WHERE Award = \"Tony Award\" INTERSECT SELECT Nominee FROM musical WHERE Award = \"Drama Desk Award\"",
+        "predict": ""
+    },
+    {
+        "db_id": "musical",
+        "gold": "SELECT Nominee FROM musical WHERE Award  =  \"Tony Award\" INTERSECT SELECT Nominee FROM musical WHERE Award  =  \"Drama Desk Award\"",
+        "question": "Who are the nominees who have been nominated for both a Tony Award and a Drama Desk Award?",
+        "fields": "Table actor, columns = [*,Actor_ID,Name,Musical_ID,Character,Duration,age]\nTable musical, columns = [*,Musical_ID,Name,Year,Award,Category,Nominee,Result]\n",
+        "foreign_keys": "Foreign_keys = [actor.Musical_ID = actor.Actor_ID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. who are the nominees who have been nominated for a Tony Award; 2. who are the nominees who have been nominated for a Drama Desk Award.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete both subproblems, we need to use table ['musical'].\n\n<3> Operation: Use 'where' to filter using column 'Award' in table 'musical'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT Nominee FROM musical WHERE Award = \"Tony Award\" INTERSECT SELECT Nominee FROM musical WHERE Award = \"Drama Desk Award\"",
+        "predict": ""
+    },
+    {
+        "db_id": "twitter_1",
+        "gold": "SELECT T2.f1 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f2 WHERE T1.name  =  \"Mary\" INTERSECT SELECT T2.f1 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid  =  T2.f2 WHERE T1.name  =  \"Susan\"",
+        "question": "Find the id of users who are followed by Mary and Susan.",
+        "fields": "Table follows, columns = [*,f1,f2]\nTable tweets, columns = [*,id,uid,text,createdate]\nTable user_profiles, columns = [*,uid,name,email,partitionid,followers]\n",
+        "foreign_keys": "Foreign_keys = [follows.f2 = user_profiles.uid,follows.f1 = user_profiles.uid,tweets.uid = user_profiles.uid]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what are the ids of users who are followed by Mary; 2. what are the ids of users who are followed by Susan.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['user_profiles', 'follows']. To complete the second subproblem, we need to use tables ['user_profiles', 'follows'] in the same reason.\n\n<3> Operation: Use 'where' to filter using column 'name' in table 'user_profiles'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T2.f2 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid = T2.f2 WHERE T1.name = \"Mary\" INTERSECT SELECT T2.f2 FROM user_profiles AS T1 JOIN follows AS T2 ON T1.uid = T2.f2 WHERE T1.name = \"Susan\"",
+        "predict": ""
+    },
+    {
+        "db_id": "allergy_1",
+        "gold": "SELECT StuID FROM Student EXCEPT SELECT StuID FROM Has_allergy",
+        "question": "Which students are unaffected by allergies?",
+        "fields": "Table Allergy_Type, columns = [*,Allergy,AllergyType]\nTable Has_Allergy, columns = [*,StuID,Allergy]\nTable Student, columns = [*,StuID,LName,Fname,Age,Sex,Major,Advisor,city_code]\n",
+        "foreign_keys": "Foreign_keys = [Has_Allergy.Allergy = Allergy_Type.Allergy,Has_Allergy.StuID = Student.StuID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are the names of all students; 2. what are the names of students who have allergies.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['Student']. To complete the second subproblem, we need to use tables ['Student', 'Has_Allergy'].\n\n<3> Operation: Use 'where' to filter using column 'StuID' in table 'Has_Allergy'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT StuID FROM Student EXCEPT SELECT T1.StuID FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID",
+        "predict": ""
+    },
+    {
+        "db_id": "allergy_1",
+        "gold": "SELECT lname ,  age FROM Student WHERE StuID IN (SELECT StuID FROM Has_allergy WHERE Allergy  =  \"Milk\" INTERSECT SELECT StuID FROM Has_allergy WHERE Allergy  =  \"Cat\")",
+        "question": "What are the last names and ages of the students who are allergic to milk and cat?",
+        "fields": "Table Allergy_Type, columns = [*,Allergy,AllergyType]\nTable Has_Allergy, columns = [*,StuID,Allergy]\nTable Student, columns = [*,StuID,LName,Fname,Age,Sex,Major,Advisor,city_code]\n",
+        "foreign_keys": "Foreign_keys = [Has_Allergy.Allergy = Allergy_Type.Allergy,Has_Allergy.StuID = Student.StuID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what are the last names and ages of the students who are allergic to milk; 2. what are the last names and ages of the students who are allergic to cat.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['Student', 'Has_Allergy', 'Allergy_Type']. To complete the second subproblem, we need to use tables ['Student', 'Has_Allergy', 'Allergy_Type'].\n\n<3> Operation: For both subproblems, we need to perform a 'JOIN' operation on the column 'StuID' in table 'Student' and 'Has_Allergy', and then filter using column 'Allergy' in table 'Allergy_Type'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T1.LName , T1.Age FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy WHERE T3.AllergyType = \"Milk\" INTERSECT SELECT T1.LName , T1.Age FROM Student AS T1 JOIN Has_Allergy AS T2 ON T1.StuID = T2.StuID JOIN Allergy_Type AS T3 ON T2.Allergy = T3.Allergy WHERE T3.AllergyType = \"Cat\"",
+        "predict": ""
+    },
+    {
+        "db_id": "allergy_1",
+        "gold": "SELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  \"food\" INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  \"animal\")",
+        "question": "Find the average age of the students who have allergies with food and animal types.",
+        "fields": "Table Allergy_Type, columns = [*,Allergy,AllergyType]\nTable Has_Allergy, columns = [*,StuID,Allergy]\nTable Student, columns = [*,StuID,LName,Fname,Age,Sex,Major,Advisor,city_code]\n",
+        "foreign_keys": "Foreign_keys = [Has_Allergy.Allergy = Allergy_Type.Allergy,Has_Allergy.StuID = Student.StuID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into three subproblems: 1. what is the id of students who have allergies with food types; 2. what is the id of students who have allergies with animal types; 3. calculate the intersection of the results of two sub problems, and then calculate the average age for the corresponding students.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['Student', 'Has_Allergy', 'Allergy_Type']. To complete the second subproblem, we need to use tables ['Student', 'Has_Allergy', 'Allergy_Type'] in the same reason. To complete the third subproblem, we need to use table ['Student'].\n\n<3> Operation: Use 'where' to filter using column 'AllergyType' in table 'Allergy_Type'. Then, use 'where' to filter using column 'StuID' in table 'Student' and use 'avg' to calculate average age.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of first two subproblems to form the StuID selection. Use 'avg' operation to calculate average age of selected students.\n\nSQL query: \nSELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy = T2.Allergy WHERE T2.allergytype = 'food' INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy = T2.Allergy WHERE T2.allergytype = 'animal')",
+        "predict": ""
+    },
+    {
+        "db_id": "allergy_1",
+        "gold": "SELECT avg(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  \"food\" INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy  =  T2.Allergy WHERE T2.allergytype  =  \"animal\")",
+        "question": "How old are the students with allergies to food and animal types on average?",
+        "fields": "Table Allergy_Type, columns = [*,Allergy,AllergyType]\nTable Has_Allergy, columns = [*,StuID,Allergy]\nTable Student, columns = [*,StuID,LName,Fname,Age,Sex,Major,Advisor,city_code]\n",
+        "foreign_keys": "Foreign_keys = [Has_Allergy.Allergy = Allergy_Type.Allergy,Has_Allergy.StuID = Student.StuID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what is the id of students who have allergies with food types; 2. what is the id of students who have allergies with animal types; 3. calculate the intersection of the results of two subproblems, and then calculate the average age for the corresponding students.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['Student', 'Has_Allergy', 'Allergy_Type']. To complete the second subproblem, we need to use tables ['Student', 'Has_Allergy', 'Allergy_Type'] in the same reason. To complete the third subproblem, we need to use table ['Student'].\n\n<3> Operation: Use 'where' to filter using column 'AllergyType' in table 'Allergy_Type'. Then, use 'where' to filter using column 'StuID' in table 'Student' and use 'avg' to calculate average age.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of first two subproblems to form the StuID selection. Use 'avg' operation to calculate average age of selected students.\n\nSQL query: \nSELECT AVG(age) FROM Student WHERE StuID IN ( SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy = T2.Allergy WHERE T2.allergytype = 'food' INTERSECT SELECT T1.StuID FROM Has_allergy AS T1 JOIN Allergy_Type AS T2 ON T1.Allergy = T2.Allergy WHERE T2.allergytype = 'animal')",
+        "predict": ""
+    },
+    {
+        "db_id": "journal_committee",
+        "gold": "SELECT date ,  theme ,  sales FROM journal EXCEPT SELECT T1.date ,  T1.theme ,  T1.sales FROM journal AS T1 JOIN journal_committee AS T2 ON T1.journal_ID  =  T2.journal_ID",
+        "question": "List the date, theme and sales of the journal which did not have any of the listed editors serving on committee.",
+        "fields": "Table editor, columns = [*,Editor_ID,Name,Age]\nTable journal, columns = [*,Journal_ID,Date,Theme,Sales]\nTable journal_committee, columns = [*,Editor_ID,Journal_ID,Work_Type]\n",
+        "foreign_keys": "Foreign_keys = [journal_committee.Journal_ID = journal.Journal_ID,journal_committee.Editor_ID = editor.Editor_ID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are the date, theme, and sales of all journals; 2. what are the date, theme, and sales of journals which had any of the listed editors serving on the committee.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['journal']. To complete the second subproblem, we need to use tables ['journal', 'journal_committee'].\n\n<3> Operation: Use 'where' to filter using column 'Journal_ID' in table 'journal_committee'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT Date, Theme, Sales FROM journal EXCEPT SELECT T1.Date, T1.Theme, T1.Sales FROM journal AS T1 JOIN journal_committee AS T2 ON T1.Journal_ID = T2.Journal_ID",
+        "predict": ""
+    },
+    {
+        "db_id": "customers_card_transactions",
+        "gold": "SELECT customer_id ,  customer_first_name FROM Customers EXCEPT SELECT T1.customer_id ,  T2.customer_first_name FROM Customers_cards AS T1 JOIN Customers AS T2 ON T1.customer_id  =  T2.customer_id WHERE card_type_code  =  \"Credit\"",
+        "question": "Show the customer ids and firstname without a credit card.",
+        "fields": "Table Accounts, columns = [*,account_id,customer_id,account_name,other_account_details]\nTable Customers, columns = [*,customer_id,customer_first_name,customer_last_name,customer_address,customer_phone,customer_email,other_customer_details]\nTable Customers_Cards, columns = [*,card_id,customer_id,card_type_code,card_number,date_valid_from,date_valid_to,other_card_details]\nTable Financial_Transactions, columns = [*,transaction_id,previous_transaction_id,account_id,card_id,transaction_type,transaction_date,transaction_amount,transaction_comment,other_transaction_details]\n",
+        "foreign_keys": "Foreign_keys = [Financial_Transactions.account_id = Accounts.account_id,Financial_Transactions.card_id = Customers_Cards.card_id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are the customer ids and first names of all customers; 2. what are the customer ids and first names of customers with a credit card (card type is Credit).\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['Customers']. To complete the second subproblem, we need to use tables ['Customers', 'Customers_Cards'].\n\n<3> Operation: Use 'where' to filter using column 'card_id' in table 'Customers_Cards'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT customer_id, customer_first_name FROM Customers EXCEPT SELECT T1.customer_id, T1.customer_first_name FROM Customers AS T1 JOIN Customers_Cards AS T2 ON T1.customer_id = T2.customer_id WHERE T2.card_type_code = 'Credit'",
+        "predict": ""
+    },
+    {
+        "db_id": "customers_card_transactions",
+        "gold": "SELECT customer_id ,  customer_first_name FROM Customers EXCEPT SELECT T1.customer_id ,  T2.customer_first_name FROM Customers_cards AS T1 JOIN Customers AS T2 ON T1.customer_id  =  T2.customer_id WHERE card_type_code  =  \"Credit\"",
+        "question": "What are the ids and first names of customers who do not hold a credit card?",
+        "fields": "Table Accounts, columns = [*,account_id,customer_id,account_name,other_account_details]\nTable Customers, columns = [*,customer_id,customer_first_name,customer_last_name,customer_address,customer_phone,customer_email,other_customer_details]\nTable Customers_Cards, columns = [*,card_id,customer_id,card_type_code,card_number,date_valid_from,date_valid_to,other_card_details]\nTable Financial_Transactions, columns = [*,transaction_id,previous_transaction_id,account_id,card_id,transaction_type,transaction_date,transaction_amount,transaction_comment,other_transaction_details]\n",
+        "foreign_keys": "Foreign_keys = [Financial_Transactions.account_id = Accounts.account_id,Financial_Transactions.card_id = Customers_Cards.card_id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are the ids and first names of all customers; 2. what are the ids and first names of customers who hold a credit card (card type Credit).\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['Customers']. To complete the second subproblem, we need to use tables ['Customers', 'Customers_Cards'].\n\n<3> Operation: Use 'where' to filter using column 'card_type_code' in table 'Customers_Cards'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT customer_id, customer_first_name FROM Customers EXCEPT SELECT T1.customer_id, T1.customer_first_name FROM Customers AS T1 JOIN Customers_Cards AS T2 ON T1.customer_id = T2.customer_id WHERE T2.card_type_code = 'Credit'",
+        "predict": ""
+    },
+    {
+        "db_id": "medicine_enzyme_interaction",
+        "gold": "SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id WHERE interaction_type  =  'inhibitor' INTERSECT SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id WHERE interaction_type  =  'activitor'",
+        "question": "What are the medicine and trade names that can interact as an inhibitor and activitor with enzymes?",
+        "fields": "Table enzyme, columns = [*,id,name,Location,Product,Chromosome,OMIM,Porphyria]\nTable medicine, columns = [*,id,name,Trade_Name,FDA_approved]\nTable medicine_enzyme_interaction, columns = [*,enzyme_id,medicine_id,interaction_type]\n",
+        "foreign_keys": "Foreign_keys = [medicine_enzyme_interaction.medicine_id = medicine.id,medicine_enzyme_interaction.enzyme_id = enzyme.id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "medicine_enzyme_interaction",
+        "gold": "SELECT name ,  trade_name FROM medicine EXCEPT SELECT T1.name ,  T1.trade_name FROM medicine AS T1 JOIN medicine_enzyme_interaction AS T2 ON T2.medicine_id  =  T1.id JOIN enzyme AS T3 ON T3.id  =  T2.enzyme_id WHERE T3.product  =  'Protoporphyrinogen IX'",
+        "question": "What are the medicine and trade names that cannot interact with the enzyme with the product 'Heme'?",
+        "fields": "Table enzyme, columns = [*,id,name,Location,Product,Chromosome,OMIM,Porphyria]\nTable medicine, columns = [*,id,name,Trade_Name,FDA_approved]\nTable medicine_enzyme_interaction, columns = [*,enzyme_id,medicine_id,interaction_type]\n",
+        "foreign_keys": "Foreign_keys = [medicine_enzyme_interaction.medicine_id = medicine.id,medicine_enzyme_interaction.enzyme_id = enzyme.id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "match_season",
+        "gold": "SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  \"Forward\" INTERSECT SELECT T1.Country_name FROM country AS T1 JOIN match_season AS T2 ON T1.Country_id  =  T2.Country WHERE T2.Position  =  \"Defender\"",
+        "question": "Return the names of countries that have players that play the Forward position, as well as players who play the Defender position.",
+        "fields": "Table country, columns = [*,Country_id,Country_name,Capital,Official_native_language]\nTable match_season, columns = [*,Season,Player,Position,Country,Team,Draft_Pick_Number,Draft_Class,College]\nTable player, columns = [*,Player_ID,Player,Years_Played,Total_WL,Singles_WL,Doubles_WL,Team]\nTable team, columns = [*,Team_id,Name]\n",
+        "foreign_keys": "Foreign_keys = [match_season.Team = team.Team_id,match_season.Country = country.Country_id,player.Team = team.Team_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "match_season",
+        "gold": "SELECT College FROM match_season WHERE POSITION  =  \"Midfielder\" INTERSECT SELECT College FROM match_season WHERE POSITION  =  \"Defender\"",
+        "question": "Which college have both players with position midfielder and players with position defender?",
+        "fields": "Table country, columns = [*,Country_id,Country_name,Capital,Official_native_language]\nTable match_season, columns = [*,Season,Player,Position,Country,Team,Draft_Pick_Number,Draft_Class,College]\nTable player, columns = [*,Player_ID,Player,Years_Played,Total_WL,Singles_WL,Doubles_WL,Team]\nTable team, columns = [*,Team_id,Name]\n",
+        "foreign_keys": "Foreign_keys = [match_season.Team = team.Team_id,match_season.Country = country.Country_id,player.Team = team.Team_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "match_season",
+        "gold": "SELECT College FROM match_season WHERE POSITION  =  \"Midfielder\" INTERSECT SELECT College FROM match_season WHERE POSITION  =  \"Defender\"",
+        "question": "Return the colleges that have players who play the Midfielder position, as well as players who play the Defender position.",
+        "fields": "Table country, columns = [*,Country_id,Country_name,Capital,Official_native_language]\nTable match_season, columns = [*,Season,Player,Position,Country,Team,Draft_Pick_Number,Draft_Class,College]\nTable player, columns = [*,Player_ID,Player,Years_Played,Total_WL,Singles_WL,Doubles_WL,Team]\nTable team, columns = [*,Team_id,Name]\n",
+        "foreign_keys": "Foreign_keys = [match_season.Team = team.Team_id,match_season.Country = country.Country_id,player.Team = team.Team_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "soccer_1",
+        "gold": "SELECT player_api_id FROM Player WHERE height  >=  180 INTERSECT SELECT player_api_id FROM Player_Attributes WHERE overall_rating  >  85",
+        "question": "List all of the player ids with a height of at least 180cm and an overall rating higher than 85.",
+        "fields": "Table Country, columns = [*,id,name]\nTable League, columns = [*,id,country_id,name]\nTable Player, columns = [*,id,player_api_id,player_name,player_fifa_api_id,birthday,height,weight]\nTable Player_Attributes, columns = [*,id,player_fifa_api_id,player_api_id,date,overall_rating,potential,preferred_foot,attacking_work_rate,defensive_work_rate,crossing,finishing,heading_accuracy,short_passing,volleys,dribbling,curve,free_kick_accuracy,long_passing,ball_control,acceleration,sprint_speed,agility,reactions,balance,shot_power,jumping,stamina,strength,long_shots,aggression,interceptions,positioning,vision,penalties,marking,standing_tackle,sliding_tackle,gk_diving,gk_handling,gk_kicking,gk_positioning,gk_reflexes]\nTable Team, columns = [*,id,team_api_id,team_fifa_api_id,team_long_name,team_short_name]\nTable Team_Attributes, columns = [*,id,team_fifa_api_id,team_api_id,date,buildUpPlaySpeed,buildUpPlaySpeedClass,buildUpPlayDribbling,buildUpPlayDribblingClass,buildUpPlayPassing,buildUpPlayPassingClass,buildUpPlayPositioningClass,chanceCreationPassing,chanceCreationPassingClass,chanceCreationCrossing,chanceCreationCrossingClass,chanceCreationShooting,chanceCreationShootingClass,chanceCreationPositioningClass,defencePressure,defencePressureClass,defenceAggression,defenceAggressionClass,defenceTeamWidth,defenceTeamWidthClass,defenceDefenderLineClass]\nTable sqlite_sequence, columns = [*,name,seq]\n",
+        "foreign_keys": "Foreign_keys = [Player_Attributes.player_api_id = Player.player_api_id,Player_Attributes.player_fifa_api_id = Player.player_fifa_api_id,League.country_id = Country.id,Team_Attributes.team_api_id = Team.team_api_id,Team_Attributes.team_fifa_api_id = Team.team_fifa_api_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "soccer_1",
+        "gold": "SELECT player_api_id FROM Player WHERE height  >=  180 AND height  <=  190 INTERSECT SELECT player_api_id FROM Player_Attributes WHERE preferred_foot  =  \"left\"",
+        "question": "List all of the ids for left-footed players with a height between 180cm and 190cm.",
+        "fields": "Table Country, columns = [*,id,name]\nTable League, columns = [*,id,country_id,name]\nTable Player, columns = [*,id,player_api_id,player_name,player_fifa_api_id,birthday,height,weight]\nTable Player_Attributes, columns = [*,id,player_fifa_api_id,player_api_id,date,overall_rating,potential,preferred_foot,attacking_work_rate,defensive_work_rate,crossing,finishing,heading_accuracy,short_passing,volleys,dribbling,curve,free_kick_accuracy,long_passing,ball_control,acceleration,sprint_speed,agility,reactions,balance,shot_power,jumping,stamina,strength,long_shots,aggression,interceptions,positioning,vision,penalties,marking,standing_tackle,sliding_tackle,gk_diving,gk_handling,gk_kicking,gk_positioning,gk_reflexes]\nTable Team, columns = [*,id,team_api_id,team_fifa_api_id,team_long_name,team_short_name]\nTable Team_Attributes, columns = [*,id,team_fifa_api_id,team_api_id,date,buildUpPlaySpeed,buildUpPlaySpeedClass,buildUpPlayDribbling,buildUpPlayDribblingClass,buildUpPlayPassing,buildUpPlayPassingClass,buildUpPlayPositioningClass,chanceCreationPassing,chanceCreationPassingClass,chanceCreationCrossing,chanceCreationCrossingClass,chanceCreationShooting,chanceCreationShootingClass,chanceCreationPositioningClass,defencePressure,defencePressureClass,defenceAggression,defenceAggressionClass,defenceTeamWidth,defenceTeamWidthClass,defenceDefenderLineClass]\nTable sqlite_sequence, columns = [*,name,seq]\n",
+        "foreign_keys": "Foreign_keys = [Player_Attributes.player_api_id = Player.player_api_id,Player_Attributes.player_fifa_api_id = Player.player_fifa_api_id,League.country_id = Country.id,Team_Attributes.team_api_id = Team.team_api_id,Team_Attributes.team_fifa_api_id = Team.team_fifa_api_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "college_2",
+        "gold": "SELECT course_id FROM SECTION WHERE semester  =  'Fall' AND YEAR  =  2009 UNION SELECT course_id FROM SECTION WHERE semester  =  'Spring' AND YEAR  =  2010",
+        "question": "Find courses that ran in Fall 2009 or in Spring 2010.",
+        "fields": "Table advisor, columns = [*,s_ID,i_ID]\nTable classroom, columns = [*,building,room_number,capacity]\nTable course, columns = [*,course_id,title,dept_name,credits]\nTable department, columns = [*,dept_name,building,budget]\nTable instructor, columns = [*,ID,name,dept_name,salary]\nTable prereq, columns = [*,course_id,prereq_id]\nTable section, columns = [*,course_id,sec_id,semester,year,building,room_number,time_slot_id]\nTable student, columns = [*,ID,name,dept_name,tot_cred]\nTable takes, columns = [*,ID,course_id,sec_id,semester,year,grade]\nTable teaches, columns = [*,ID,course_id,sec_id,semester,year]\nTable time_slot, columns = [*,time_slot_id,day,start_hr,start_min,end_hr,end_min]\n",
+        "foreign_keys": "Foreign_keys = [course.dept_name = department.dept_name,instructor.dept_name = department.dept_name,section.building = classroom.building,section.room_number = classroom.room_number,section.course_id = course.course_id,teaches.ID = instructor.ID,teaches.course_id = section.course_id,teaches.sec_id = section.sec_id,teaches.semester = section.semester,teaches.year = section.year,student.dept_name = department.dept_name,takes.ID = student.ID,takes.course_id = section.course_id,takes.sec_id = section.sec_id,takes.semester = section.semester,takes.year = section.year,advisor.s_ID = student.ID,advisor.i_ID = instructor.ID,prereq.prereq_id = course.course_id,prereq.course_id = course.course_id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes union logic, so we can decompose the question into two subproblems: 1. what are the courses that ran in Fall 2009; 2. what are the courses that ran in Spring 2010.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['course', 'section']. To complete the second subproblem, we need to use tables ['course', 'section'] in the same reason.\n\n<3> Operation: Use 'where' to filter using column 'semester' and 'year' in table 'section'.\n\n<4> SQL Generation: Use 'union' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T1.course_id FROM course AS T1 JOIN section AS T2 ON T1.course_id = T2.course_id WHERE T2.semester = 'Fall' AND T2.year = 2009 UNION SELECT T1.course_id FROM course AS T1 JOIN section AS T2 ON T1.course_id = T2.course_id WHERE T2.semester = 'Spring' AND T2.year = 2010",
+        "predict": ""
+    },
+    {
+        "db_id": "college_2",
+        "gold": "SELECT course_id FROM SECTION WHERE semester  =  'Fall' AND YEAR  =  2009 EXCEPT SELECT course_id FROM SECTION WHERE semester  =  'Spring' AND YEAR  =  2010",
+        "question": "Find courses that ran in Fall 2009 but not in Spring 2010.",
+        "fields": "Table advisor, columns = [*,s_ID,i_ID]\nTable classroom, columns = [*,building,room_number,capacity]\nTable course, columns = [*,course_id,title,dept_name,credits]\nTable department, columns = [*,dept_name,building,budget]\nTable instructor, columns = [*,ID,name,dept_name,salary]\nTable prereq, columns = [*,course_id,prereq_id]\nTable section, columns = [*,course_id,sec_id,semester,year,building,room_number,time_slot_id]\nTable student, columns = [*,ID,name,dept_name,tot_cred]\nTable takes, columns = [*,ID,course_id,sec_id,semester,year,grade]\nTable teaches, columns = [*,ID,course_id,sec_id,semester,year]\nTable time_slot, columns = [*,time_slot_id,day,start_hr,start_min,end_hr,end_min]\n",
+        "foreign_keys": "Foreign_keys = [course.dept_name = department.dept_name,instructor.dept_name = department.dept_name,section.building = classroom.building,section.room_number = classroom.room_number,section.course_id = course.course_id,teaches.ID = instructor.ID,teaches.course_id = section.course_id,teaches.sec_id = section.sec_id,teaches.semester = section.semester,teaches.year = section.year,student.dept_name = department.dept_name,takes.ID = student.ID,takes.course_id = section.course_id,takes.sec_id = section.sec_id,takes.semester = section.semester,takes.year = section.year,advisor.s_ID = student.ID,advisor.i_ID = instructor.ID,prereq.prereq_id = course.course_id,prereq.course_id = course.course_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "wrestler",
+        "gold": "SELECT Team FROM Elimination WHERE Eliminated_By  =  \"Orton\" INTERSECT SELECT Team FROM Elimination WHERE Eliminated_By  =  \"Benjamin\"",
+        "question": "Show the teams that have both wrestlers eliminated by \"Orton\" and wrestlers eliminated by \"Benjamin\".",
+        "fields": "Table Elimination, columns = [*,Elimination_ID,Wrestler_ID,Team,Eliminated_By,Elimination_Move,Time]\nTable wrestler, columns = [*,Wrestler_ID,Name,Reign,Days_held,Location,Event]\n",
+        "foreign_keys": "Foreign_keys = [Elimination.Wrestler_ID = wrestler.Wrestler_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "wrestler",
+        "gold": "SELECT Team FROM Elimination WHERE Eliminated_By  =  \"Orton\" INTERSECT SELECT Team FROM Elimination WHERE Eliminated_By  =  \"Benjamin\"",
+        "question": "What are the teams that have both wrestlers eliminated by Orton and wrestlers eliminated by Benjamin?",
+        "fields": "Table Elimination, columns = [*,Elimination_ID,Wrestler_ID,Team,Eliminated_By,Elimination_Move,Time]\nTable wrestler, columns = [*,Wrestler_ID,Name,Reign,Days_held,Location,Event]\n",
+        "foreign_keys": "Foreign_keys = [Elimination.Wrestler_ID = wrestler.Wrestler_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "cinema",
+        "gold": "SELECT LOCATION FROM cinema EXCEPT SELECT LOCATION FROM cinema WHERE capacity  >  800",
+        "question": "Show all the locations where no cinema has capacity over 800.",
+        "fields": "Table cinema, columns = [*,Cinema_ID,Name,Openning_year,Capacity,Location]\nTable film, columns = [*,Film_ID,Rank_in_series,Number_in_season,Title,Directed_by,Original_air_date,Production_code]\nTable schedule, columns = [*,Cinema_ID,Film_ID,Date,Show_times_per_day,Price]\n",
+        "foreign_keys": "Foreign_keys = [schedule.Cinema_ID = cinema.Cinema_ID,schedule.Film_ID = film.Film_ID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are all the locations of cinemas; 2. what are the locations of cinemas that have a capacity over 800.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['cinema']. To complete the second subproblem, we need to use table ['cinema'].\n\n<3> Operation: Use 'where' to filter using column 'Capacity' in table 'cinema'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT Location FROM cinema EXCEPT SELECT Location FROM cinema WHERE Capacity > 800",
+        "predict": ""
+    },
+    {
+        "db_id": "gas_company",
+        "gold": "SELECT headquarters FROM company EXCEPT SELECT headquarters FROM company WHERE main_industry  =  'Banking'",
+        "question": "What are the headquarters without companies that are in the banking industry?",
+        "fields": "Table company, columns = [*,Company_ID,Rank,Company,Headquarters,Main_Industry,Sales_billion,Profits_billion,Assets_billion,Market_Value]\nTable gas_station, columns = [*,Station_ID,Open_Year,Location,Manager_Name,Vice_Manager_Name,Representative_Name]\nTable station_company, columns = [*,Station_ID,Company_ID,Rank_of_the_Year]\n",
+        "foreign_keys": "Foreign_keys = [station_company.Company_ID = company.Company_ID,station_company.Station_ID = gas_station.Station_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "cre_Doc_Control_Systems",
+        "gold": "SELECT document_id FROM Documents WHERE document_status_code  =  \"done\" AND document_type_code = \"Paper\" EXCEPT SELECT document_id FROM Documents JOIN Ref_Shipping_Agents ON Documents.shipping_agent_code = Ref_Shipping_Agents.shipping_agent_code WHERE Ref_Shipping_Agents.shipping_agent_name = \"USPS\";",
+        "question": "List the document ids of documents with the status done and type Paper, which not shipped by the shipping agent named USPS.",
+        "fields": "Table Addresses, columns = [*,address_id,address_details]\nTable Circulation_History, columns = [*,document_id,draft_number,copy_number,employee_id]\nTable Document_Drafts, columns = [*,document_id,draft_number,draft_details]\nTable Documents, columns = [*,document_id,document_status_code,document_type_code,shipping_agent_code,receipt_date,receipt_number,other_details]\nTable Documents_Mailed, columns = [*,document_id,mailed_to_address_id,mailing_date]\nTable Draft_Copies, columns = [*,document_id,draft_number,copy_number]\nTable Employees, columns = [*,employee_id,role_code,employee_name,other_details]\nTable Ref_Document_Status, columns = [*,document_status_code,document_status_description]\nTable Ref_Document_Types, columns = [*,document_type_code,document_type_description]\nTable Ref_Shipping_Agents, columns = [*,shipping_agent_code,shipping_agent_name,shipping_agent_description]\nTable Roles, columns = [*,role_code,role_description]\n",
+        "foreign_keys": "Foreign_keys = [Documents.shipping_agent_code = Ref_Shipping_Agents.shipping_agent_code,Documents.document_status_code = Ref_Document_Status.document_status_code,Documents.document_type_code = Ref_Document_Types.document_type_code,Employees.role_code = Roles.role_code,Document_Drafts.document_id = Documents.document_id,Draft_Copies.document_id = Document_Drafts.document_id,Draft_Copies.draft_number = Document_Drafts.draft_number,Circulation_History.employee_id = Employees.employee_id,Circulation_History.document_id = Draft_Copies.document_id,Circulation_History.draft_number = Draft_Copies.draft_number,Circulation_History.copy_number = Draft_Copies.copy_number,Documents_Mailed.mailed_to_address_id = Addresses.address_id,Documents_Mailed.document_id = Documents.document_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "cre_Doc_Control_Systems",
+        "gold": "SELECT document_id FROM Documents WHERE document_status_code  =  \"done\" AND document_type_code = \"Paper\" INTERSECT SELECT document_id FROM Documents JOIN Ref_Shipping_Agents ON Documents.shipping_agent_code = Ref_Shipping_Agents.shipping_agent_code WHERE Ref_Shipping_Agents.shipping_agent_name = \"USPS\";",
+        "question": "List document id of documents status is done and document type is Paper and the document is shipped by shipping agent named USPS.",
+        "fields": "Table Addresses, columns = [*,address_id,address_details]\nTable Circulation_History, columns = [*,document_id,draft_number,copy_number,employee_id]\nTable Document_Drafts, columns = [*,document_id,draft_number,draft_details]\nTable Documents, columns = [*,document_id,document_status_code,document_type_code,shipping_agent_code,receipt_date,receipt_number,other_details]\nTable Documents_Mailed, columns = [*,document_id,mailed_to_address_id,mailing_date]\nTable Draft_Copies, columns = [*,document_id,draft_number,copy_number]\nTable Employees, columns = [*,employee_id,role_code,employee_name,other_details]\nTable Ref_Document_Status, columns = [*,document_status_code,document_status_description]\nTable Ref_Document_Types, columns = [*,document_type_code,document_type_description]\nTable Ref_Shipping_Agents, columns = [*,shipping_agent_code,shipping_agent_name,shipping_agent_description]\nTable Roles, columns = [*,role_code,role_description]\n",
+        "foreign_keys": "Foreign_keys = [Documents.shipping_agent_code = Ref_Shipping_Agents.shipping_agent_code,Documents.document_status_code = Ref_Document_Status.document_status_code,Documents.document_type_code = Ref_Document_Types.document_type_code,Employees.role_code = Roles.role_code,Document_Drafts.document_id = Documents.document_id,Draft_Copies.document_id = Document_Drafts.document_id,Draft_Copies.draft_number = Document_Drafts.draft_number,Circulation_History.employee_id = Employees.employee_id,Circulation_History.document_id = Draft_Copies.document_id,Circulation_History.draft_number = Draft_Copies.draft_number,Circulation_History.copy_number = Draft_Copies.copy_number,Documents_Mailed.mailed_to_address_id = Addresses.address_id,Documents_Mailed.document_id = Documents.document_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "local_govt_in_alabama",
+        "gold": "SELECT event_id FROM EVENTS EXCEPT SELECT T1.event_id FROM Participants_in_Events AS T1 JOIN Participants AS T2 ON T1.Participant_ID  =  T2.Participant_ID WHERE Participant_Details  =  'Kenyatta Kuhn'",
+        "question": "Which events id does not have any participant with detail 'Kenyatta Kuhn'?",
+        "fields": "Table Events, columns = [*,Event_ID,Service_ID,Event_Details]\nTable Participants, columns = [*,Participant_ID,Participant_Type_Code,Participant_Details]\nTable Participants_in_Events, columns = [*,Event_ID,Participant_ID]\nTable Services, columns = [*,Service_ID,Service_Type_Code]\n",
+        "foreign_keys": "Foreign_keys = [Events.Service_ID = Services.Service_ID,Participants_in_Events.Event_ID = Events.Event_ID,Participants_in_Events.Participant_ID = Participants.Participant_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "machine_repair",
+        "gold": "SELECT Starting_Year FROM technician WHERE Team  =  \"CLE\" INTERSECT SELECT Starting_Year FROM technician WHERE Team  =  \"CWS\"",
+        "question": "What are the starting years shared by the technicians from the team \"CLE\" or \"CWS\"?",
+        "fields": "Table machine, columns = [*,Machine_ID,Making_Year,Class,Team,Machine_series,value_points,quality_rank]\nTable repair, columns = [*,repair_ID,name,Launch_Date,Notes]\nTable repair_assignment, columns = [*,technician_id,repair_ID,Machine_ID]\nTable technician, columns = [*,technician_id,Name,Team,Starting_Year,Age]\n",
+        "foreign_keys": "Foreign_keys = [repair_assignment.Machine_ID = machine.Machine_ID,repair_assignment.repair_ID = repair.repair_ID,repair_assignment.technician_id = technician.technician_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "movie_1",
+        "gold": "SELECT name FROM Reviewer UNION SELECT title FROM Movie",
+        "question": "Return all reviewer names and movie names together in a single list.",
+        "fields": "Table Movie, columns = [*,mID,title,year,director]\nTable Rating, columns = [*,rID,mID,stars,ratingDate]\nTable Reviewer, columns = [*,rID,name]\n",
+        "foreign_keys": "Foreign_keys = [Rating.rID = Reviewer.rID,Rating.mID = Movie.mID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "movie_1",
+        "gold": "SELECT mID FROM Rating EXCEPT SELECT T1.mID FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID  =  T2.rID WHERE T2.name  =  \"Brittany Harris\"",
+        "question": "What are the ids of the movies that are not reviewed by Brittany Harris.",
+        "fields": "Table Movie, columns = [*,mID,title,year,director]\nTable Rating, columns = [*,rID,mID,stars,ratingDate]\nTable Reviewer, columns = [*,rID,name]\n",
+        "foreign_keys": "Foreign_keys = [Rating.rID = Reviewer.rID,Rating.mID = Movie.mID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "movie_1",
+        "gold": "SELECT mID FROM Rating EXCEPT SELECT T1.mID FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID  =  T2.rID WHERE T2.name  =  \"Brittany Harris\"",
+        "question": "What are the ids of all moviest hat have not been reviewed by Britanny Harris?",
+        "fields": "Table Movie, columns = [*,mID,title,year,director]\nTable Rating, columns = [*,rID,mID,stars,ratingDate]\nTable Reviewer, columns = [*,rID,name]\n",
+        "foreign_keys": "Foreign_keys = [Rating.rID = Reviewer.rID,Rating.mID = Movie.mID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "movie_1",
+        "gold": "SELECT T2.name FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID  =  T2.rID WHERE T1.stars  =  3 INTERSECT SELECT T2.name FROM Rating AS T1 JOIN Reviewer AS T2 ON T1.rID  =  T2.rID WHERE T1.stars  =  4",
+        "question": "What are the names of all reviewers that have given 3 or 4 stars for reviews?",
+        "fields": "Table Movie, columns = [*,mID,title,year,director]\nTable Rating, columns = [*,rID,mID,stars,ratingDate]\nTable Reviewer, columns = [*,rID,name]\n",
+        "foreign_keys": "Foreign_keys = [Rating.rID = Reviewer.rID,Rating.mID = Movie.mID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "movie_1",
+        "gold": "SELECT T2.title FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T1.stars  =  3 INTERSECT SELECT T2.title FROM Rating AS T1 JOIN Movie AS T2 ON T1.mID  =  T2.mID WHERE T1.stars  =  4",
+        "question": "What are the names of all movies that received 3 or 4 stars?",
+        "fields": "Table Movie, columns = [*,mID,title,year,director]\nTable Rating, columns = [*,rID,mID,stars,ratingDate]\nTable Reviewer, columns = [*,rID,name]\n",
+        "foreign_keys": "Foreign_keys = [Rating.rID = Reviewer.rID,Rating.mID = Movie.mID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "county_public_safety",
+        "gold": "SELECT Police_force FROM county_public_safety WHERE LOCATION  =  \"East\" INTERSECT SELECT Police_force FROM county_public_safety WHERE LOCATION  =  \"West\"",
+        "question": "Show the police force shared by counties with location on the east and west.",
+        "fields": "Table city, columns = [*,City_ID,County_ID,Name,White,Black,Amerindian,Asian,Multiracial,Hispanic]\nTable county_public_safety, columns = [*,County_ID,Name,Population,Police_officers,Residents_per_officer,Case_burden,Crime_rate,Police_force,Location]\n",
+        "foreign_keys": "Foreign_keys = [city.County_ID = county_public_safety.County_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "county_public_safety",
+        "gold": "SELECT Police_force FROM county_public_safety WHERE LOCATION  =  \"East\" INTERSECT SELECT Police_force FROM county_public_safety WHERE LOCATION  =  \"West\"",
+        "question": "Which police forces operate in both counties that are located in the East and in the West?",
+        "fields": "Table city, columns = [*,City_ID,County_ID,Name,White,Black,Amerindian,Asian,Multiracial,Hispanic]\nTable county_public_safety, columns = [*,County_ID,Name,Population,Police_officers,Residents_per_officer,Case_burden,Crime_rate,Police_force,Location]\n",
+        "foreign_keys": "Foreign_keys = [city.County_ID = county_public_safety.County_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "election",
+        "gold": "SELECT T2.Party FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T1.Committee  =  \"Appropriations\" INTERSECT SELECT T2.Party FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T1.Committee  =  \"Economic Matters\"",
+        "question": "What are the names of parties that have both delegates on \"Appropriations\" committee and",
+        "fields": "Table county, columns = [*,County_Id,County_name,Population,Zip_code]\nTable election, columns = [*,Election_ID,Counties_Represented,District,Delegate,Party,First_Elected,Committee]\nTable party, columns = [*,Party_ID,Year,Party,Governor,Lieutenant_Governor,Comptroller,Attorney_General,US_Senate]\n",
+        "foreign_keys": "Foreign_keys = [election.District = county.County_Id,election.Party = party.Party_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "election",
+        "gold": "SELECT T2.Party FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T1.Committee  =  \"Appropriations\" INTERSECT SELECT T2.Party FROM election AS T1 JOIN party AS T2 ON T1.Party  =  T2.Party_ID WHERE T1.Committee  =  \"Economic Matters\"",
+        "question": "Which parties have delegates in both the \"Appropriations\" committee and the \"Economic Matters\" committee?",
+        "fields": "Table county, columns = [*,County_Id,County_name,Population,Zip_code]\nTable election, columns = [*,Election_ID,Counties_Represented,District,Delegate,Party,First_Elected,Committee]\nTable party, columns = [*,Party_ID,Year,Party,Governor,Lieutenant_Governor,Comptroller,Attorney_General,US_Senate]\n",
+        "foreign_keys": "Foreign_keys = [election.District = county.County_Id,election.Party = party.Party_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "sakila_1",
+        "gold": "SELECT title ,  film_id FROM film WHERE rental_rate  =  0.99 INTERSECT SELECT T1.title ,  T1.film_id FROM film AS T1 JOIN inventory AS T2 ON T1.film_id  =  T2.film_id GROUP BY T1.film_id HAVING count(*)  <  3",
+        "question": "Which film is rented at a fee of 0.99 and has less than 3 in the inventory? List the film title and id.",
+        "fields": "Table actor, columns = [*,actor_id,first_name,last_name,last_update]\nTable address, columns = [*,address_id,address,address2,district,city_id,postal_code,phone,last_update]\nTable category, columns = [*,category_id,name,last_update]\nTable city, columns = [*,city_id,city,country_id,last_update]\nTable country, columns = [*,country_id,country,last_update]\nTable customer, columns = [*,customer_id,store_id,first_name,last_name,email,address_id,active,create_date,last_update]\nTable film, columns = [*,film_id,title,description,release_year,language_id,original_language_id,rental_duration,rental_rate,length,replacement_cost,rating,special_features,last_update]\nTable film_actor, columns = [*,actor_id,film_id,last_update]\nTable film_category, columns = [*,film_id,category_id,last_update]\nTable film_text, columns = [*,film_id,title,description]\nTable inventory, columns = [*,inventory_id,film_id,store_id,last_update]\nTable language, columns = [*,language_id,name,last_update]\nTable payment, columns = [*,payment_id,customer_id,staff_id,rental_id,amount,payment_date,last_update]\nTable rental, columns = [*,rental_id,rental_date,inventory_id,customer_id,return_date,staff_id,last_update]\nTable staff, columns = [*,staff_id,first_name,last_name,address_id,picture,email,store_id,active,username,password,last_update]\nTable store, columns = [*,store_id,manager_staff_id,address_id,last_update]\n",
+        "foreign_keys": "Foreign_keys = [address.city_id = city.city_id,city.country_id = country.country_id,customer.store_id = store.store_id,customer.address_id = address.address_id,film.original_language_id = language.language_id,film.language_id = language.language_id,film_actor.film_id = film.film_id,film_actor.actor_id = actor.actor_id,film_category.category_id = category.category_id,film_category.film_id = film.film_id,inventory.film_id = film.film_id,inventory.store_id = store.store_id,payment.staff_id = staff.staff_id,payment.customer_id = customer.customer_id,payment.rental_id = rental.rental_id,rental.customer_id = customer.customer_id,rental.inventory_id = inventory.inventory_id,rental.staff_id = staff.staff_id,staff.address_id = address.address_id,store.address_id = address.address_id,store.manager_staff_id = staff.staff_id]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes intersection logic, so we can decompose the question into two subproblems: 1. what are the film title and id that are rented at a fee of 0.99; 2. what are the film title and id that have less than 3 in the inventory.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['film', 'rental', 'payment']. To complete the second subproblem, we need to use tables ['film', 'inventory'].\n\n<3> Operation: For the first subproblem, use 'where' to filter using column 'amount' in table 'payment'. For the second subproblem, perform a 'GROUP BY' operation on the column 'film_id' and filter by performing 'HAVING COUNT()' on the column 'inventory_id'.\n\n<4> SQL Generation: Use 'intersect' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T1.title, T1.film_id FROM film AS T1 JOIN inventory AS T2 ON T1.film_id = T2.film_id JOIN rental AS T3 ON T2.inventory_id = T3.inventory_id JOIN payment AS T4 ON T3.rental_id = T4.rental_id WHERE T4.amount = 0.99 INTERSECT SELECT T1.title, T1.film_id FROM film AS T1 JOIN inventory AS T2 ON T1.film_id = T2.film_id GROUP BY T1.film_id HAVING COUNT(T2.inventory_id)",
+        "predict": ""
+    },
+    {
+        "db_id": "sakila_1",
+        "gold": "SELECT payment_date FROM payment WHERE amount  >  10 UNION SELECT T1.payment_date FROM payment AS T1 JOIN staff AS T2 ON T1.staff_id  =  T2.staff_id WHERE T2.first_name  =  'Elsa'",
+        "question": "Find all the payment dates for the payments with an amount larger than 10 and the payments handled by a staff person with the first name Elsa.",
+        "fields": "Table actor, columns = [*,actor_id,first_name,last_name,last_update]\nTable address, columns = [*,address_id,address,address2,district,city_id,postal_code,phone,last_update]\nTable category, columns = [*,category_id,name,last_update]\nTable city, columns = [*,city_id,city,country_id,last_update]\nTable country, columns = [*,country_id,country,last_update]\nTable customer, columns = [*,customer_id,store_id,first_name,last_name,email,address_id,active,create_date,last_update]\nTable film, columns = [*,film_id,title,description,release_year,language_id,original_language_id,rental_duration,rental_rate,length,replacement_cost,rating,special_features,last_update]\nTable film_actor, columns = [*,actor_id,film_id,last_update]\nTable film_category, columns = [*,film_id,category_id,last_update]\nTable film_text, columns = [*,film_id,title,description]\nTable inventory, columns = [*,inventory_id,film_id,store_id,last_update]\nTable language, columns = [*,language_id,name,last_update]\nTable payment, columns = [*,payment_id,customer_id,staff_id,rental_id,amount,payment_date,last_update]\nTable rental, columns = [*,rental_id,rental_date,inventory_id,customer_id,return_date,staff_id,last_update]\nTable staff, columns = [*,staff_id,first_name,last_name,address_id,picture,email,store_id,active,username,password,last_update]\nTable store, columns = [*,store_id,manager_staff_id,address_id,last_update]\n",
+        "foreign_keys": "Foreign_keys = [address.city_id = city.city_id,city.country_id = country.country_id,customer.store_id = store.store_id,customer.address_id = address.address_id,film.original_language_id = language.language_id,film.language_id = language.language_id,film_actor.film_id = film.film_id,film_actor.actor_id = actor.actor_id,film_category.category_id = category.category_id,film_category.film_id = film.film_id,inventory.film_id = film.film_id,inventory.store_id = store.store_id,payment.staff_id = staff.staff_id,payment.customer_id = customer.customer_id,payment.rental_id = rental.rental_id,rental.customer_id = customer.customer_id,rental.inventory_id = inventory.inventory_id,rental.staff_id = staff.staff_id,staff.address_id = address.address_id,store.address_id = address.address_id,store.manager_staff_id = staff.staff_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "behavior_monitoring",
+        "gold": "SELECT T1.line_1 FROM Addresses AS T1 JOIN Students AS T2 ON T1.address_id  =  T2.address_id INTERSECT SELECT T1.line_1 FROM Addresses AS T1 JOIN Teachers AS T2 ON T1.address_id  =  T2.address_id",
+        "question": "What are the line 1 of addresses shared by some students and some teachers?",
+        "fields": "Table Addresses, columns = [*,address_id,line_1,line_2,line_3,city,zip_postcode,state_province_county,country,other_address_details]\nTable Assessment_Notes, columns = [*,notes_id,student_id,teacher_id,date_of_notes,text_of_notes,other_details]\nTable Behavior_Incident, columns = [*,incident_id,incident_type_code,student_id,date_incident_start,date_incident_end,incident_summary,recommendations,other_details]\nTable Detention, columns = [*,detention_id,detention_type_code,teacher_id,datetime_detention_start,datetime_detention_end,detention_summary,other_details]\nTable Ref_Address_Types, columns = [*,address_type_code,address_type_description]\nTable Ref_Detention_Type, columns = [*,detention_type_code,detention_type_description]\nTable Ref_Incident_Type, columns = [*,incident_type_code,incident_type_description]\nTable Student_Addresses, columns = [*,student_id,address_id,date_address_from,date_address_to,monthly_rental,other_details]\nTable Students, columns = [*,student_id,address_id,first_name,middle_name,last_name,cell_mobile_number,email_address,date_first_rental,date_left_university,other_student_details]\nTable Students_in_Detention, columns = [*,student_id,detention_id,incident_id]\nTable Teachers, columns = [*,teacher_id,address_id,first_name,middle_name,last_name,gender,cell_mobile_number,email_address,other_details]\n",
+        "foreign_keys": "Foreign_keys = [Students.address_id = Addresses.address_id,Teachers.address_id = Addresses.address_id,Assessment_Notes.teacher_id = Teachers.teacher_id,Assessment_Notes.student_id = Students.student_id,Behavior_Incident.student_id = Students.student_id,Behavior_Incident.incident_type_code = Ref_Incident_Type.incident_type_code,Detention.teacher_id = Teachers.teacher_id,Detention.detention_type_code = Ref_Detention_Type.detention_type_code,Student_Addresses.student_id = Students.student_id,Student_Addresses.address_id = Addresses.address_id,Students_in_Detention.student_id = Students.student_id,Students_in_Detention.detention_id = Detention.detention_id,Students_in_Detention.incident_id = Behavior_Incident.incident_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "assets_maintenance",
+        "gold": "SELECT T1.asset_id ,  T1.asset_details FROM Assets AS T1 JOIN Asset_Parts AS T2 ON T1.asset_id  =  T2.asset_id GROUP BY T1.asset_id HAVING count(*)  =  2 INTERSECT SELECT T1.asset_id ,  T1.asset_details FROM Assets AS T1 JOIN Fault_Log AS T2 ON T1.asset_id  =  T2.asset_id GROUP BY T1.asset_id HAVING count(*)  <  2",
+        "question": "Which assets have 2 parts and have less than 2 fault logs? List the asset id and detail.",
+        "fields": "Table Asset_Parts, columns = [*,asset_id,part_id]\nTable Assets, columns = [*,asset_id,maintenance_contract_id,supplier_company_id,asset_details,asset_make,asset_model,asset_acquired_date,asset_disposed_date,other_asset_details]\nTable Engineer_Skills, columns = [*,engineer_id,skill_id]\nTable Engineer_Visits, columns = [*,engineer_visit_id,contact_staff_id,engineer_id,fault_log_entry_id,fault_status,visit_start_datetime,visit_end_datetime,other_visit_details]\nTable Fault_Log, columns = [*,fault_log_entry_id,asset_id,recorded_by_staff_id,fault_log_entry_datetime,fault_description,other_fault_details]\nTable Fault_Log_Parts, columns = [*,fault_log_entry_id,part_fault_id,fault_status]\nTable Maintenance_Contracts, columns = [*,maintenance_contract_id,maintenance_contract_company_id,contract_start_date,contract_end_date,other_contract_details]\nTable Maintenance_Engineers, columns = [*,engineer_id,company_id,first_name,last_name,other_details]\nTable Part_Faults, columns = [*,part_fault_id,part_id,fault_short_name,fault_description,other_fault_details]\nTable Parts, columns = [*,part_id,part_name,chargeable_yn,chargeable_amount,other_part_details]\nTable Skills, columns = [*,skill_id,skill_code,skill_description]\nTable Skills_Required_To_Fix, columns = [*,part_fault_id,skill_id]\nTable Staff, columns = [*,staff_id,staff_name,gender,other_staff_details]\nTable Third_Party_Companies, columns = [*,company_id,company_type,company_name,company_address,other_company_details]\n",
+        "foreign_keys": "Foreign_keys = [Maintenance_Contracts.maintenance_contract_company_id = Third_Party_Companies.company_id,Assets.supplier_company_id = Third_Party_Companies.company_id,Assets.maintenance_contract_id = Maintenance_Contracts.maintenance_contract_id,Asset_Parts.asset_id = Assets.asset_id,Asset_Parts.part_id = Parts.part_id,Maintenance_Engineers.company_id = Third_Party_Companies.company_id,Engineer_Skills.skill_id = Skills.skill_id,Engineer_Skills.engineer_id = Maintenance_Engineers.engineer_id,Fault_Log.recorded_by_staff_id = Staff.staff_id,Fault_Log.asset_id = Assets.asset_id,Engineer_Visits.contact_staff_id = Staff.staff_id,Engineer_Visits.engineer_id = Maintenance_Engineers.engineer_id,Engineer_Visits.fault_log_entry_id = Fault_Log.fault_log_entry_id,Part_Faults.part_id = Parts.part_id,Fault_Log_Parts.fault_log_entry_id = Fault_Log.fault_log_entry_id,Fault_Log_Parts.part_fault_id = Part_Faults.part_fault_id,Skills_Required_To_Fix.skill_id = Skills.skill_id,Skills_Required_To_Fix.part_fault_id = Part_Faults.part_fault_id]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "college_1",
+        "gold": "SELECT emp_fname FROM employee WHERE emp_jobcode  =  'PROF' EXCEPT SELECT T1.emp_fname FROM employee AS T1 JOIN CLASS AS T2 ON T1.emp_num  =  T2.prof_num",
+        "question": "What are the first names of the professors who do not teach a class.",
+        "fields": "Table CLASS, columns = [*,CLASS_CODE,CRS_CODE,CLASS_SECTION,CLASS_TIME,CLASS_ROOM,PROF_NUM]\nTable COURSE, columns = [*,CRS_CODE,DEPT_CODE,CRS_DESCRIPTION,CRS_CREDIT]\nTable DEPARTMENT, columns = [*,DEPT_CODE,DEPT_NAME,SCHOOL_CODE,EMP_NUM,DEPT_ADDRESS,DEPT_EXTENSION]\nTable EMPLOYEE, columns = [*,EMP_NUM,EMP_LNAME,EMP_FNAME,EMP_INITIAL,EMP_JOBCODE,EMP_HIREDATE,EMP_DOB]\nTable ENROLL, columns = [*,CLASS_CODE,STU_NUM,ENROLL_GRADE]\nTable PROFESSOR, columns = [*,EMP_NUM,DEPT_CODE,PROF_OFFICE,PROF_EXTENSION,PROF_HIGH_DEGREE]\nTable STUDENT, columns = [*,STU_NUM,STU_LNAME,STU_FNAME,STU_INIT,STU_DOB,STU_HRS,STU_CLASS,STU_GPA,STU_TRANSFER,DEPT_CODE,STU_PHONE,PROF_NUM]\n",
+        "foreign_keys": "Foreign_keys = [CLASS.PROF_NUM = EMPLOYEE.EMP_NUM,CLASS.CRS_CODE = COURSE.CRS_CODE,COURSE.DEPT_CODE = DEPARTMENT.DEPT_CODE,DEPARTMENT.EMP_NUM = EMPLOYEE.EMP_NUM,ENROLL.STU_NUM = STUDENT.STU_NUM,ENROLL.CLASS_CODE = CLASS.CLASS_CODE,PROFESSOR.DEPT_CODE = DEPARTMENT.DEPT_CODE,PROFESSOR.EMP_NUM = EMPLOYEE.EMP_NUM,STUDENT.DEPT_CODE = DEPARTMENT.DEPT_CODE]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "college_1",
+        "gold": "SELECT emp_fname FROM employee WHERE emp_jobcode  =  'PROF' EXCEPT SELECT T1.emp_fname FROM employee AS T1 JOIN CLASS AS T2 ON T1.emp_num  =  T2.prof_num",
+        "question": "What are the first names of all professors not teaching any classes?",
+        "fields": "Table CLASS, columns = [*,CLASS_CODE,CRS_CODE,CLASS_SECTION,CLASS_TIME,CLASS_ROOM,PROF_NUM]\nTable COURSE, columns = [*,CRS_CODE,DEPT_CODE,CRS_DESCRIPTION,CRS_CREDIT]\nTable DEPARTMENT, columns = [*,DEPT_CODE,DEPT_NAME,SCHOOL_CODE,EMP_NUM,DEPT_ADDRESS,DEPT_EXTENSION]\nTable EMPLOYEE, columns = [*,EMP_NUM,EMP_LNAME,EMP_FNAME,EMP_INITIAL,EMP_JOBCODE,EMP_HIREDATE,EMP_DOB]\nTable ENROLL, columns = [*,CLASS_CODE,STU_NUM,ENROLL_GRADE]\nTable PROFESSOR, columns = [*,EMP_NUM,DEPT_CODE,PROF_OFFICE,PROF_EXTENSION,PROF_HIGH_DEGREE]\nTable STUDENT, columns = [*,STU_NUM,STU_LNAME,STU_FNAME,STU_INIT,STU_DOB,STU_HRS,STU_CLASS,STU_GPA,STU_TRANSFER,DEPT_CODE,STU_PHONE,PROF_NUM]\n",
+        "foreign_keys": "Foreign_keys = [CLASS.PROF_NUM = EMPLOYEE.EMP_NUM,CLASS.CRS_CODE = COURSE.CRS_CODE,COURSE.DEPT_CODE = DEPARTMENT.DEPT_CODE,DEPARTMENT.EMP_NUM = EMPLOYEE.EMP_NUM,ENROLL.STU_NUM = STUDENT.STU_NUM,ENROLL.CLASS_CODE = CLASS.CLASS_CODE,PROFESSOR.DEPT_CODE = DEPARTMENT.DEPT_CODE,PROFESSOR.EMP_NUM = EMPLOYEE.EMP_NUM,STUDENT.DEPT_CODE = DEPARTMENT.DEPT_CODE]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "college_1",
+        "gold": "SELECT T1.emp_fname FROM employee AS T1 JOIN professor AS T2 ON T1.emp_num  =  T2.emp_num JOIN department AS T3 ON T2.dept_code  =  T3.dept_code WHERE T3.dept_name  =  'History' EXCEPT SELECT T4.emp_fname FROM employee AS T4 JOIN CLASS AS T5 ON T4.emp_num  =  T5.prof_num",
+        "question": "What is the first names of the professors from the history department who do not teach a class.",
+        "fields": "Table CLASS, columns = [*,CLASS_CODE,CRS_CODE,CLASS_SECTION,CLASS_TIME,CLASS_ROOM,PROF_NUM]\nTable COURSE, columns = [*,CRS_CODE,DEPT_CODE,CRS_DESCRIPTION,CRS_CREDIT]\nTable DEPARTMENT, columns = [*,DEPT_CODE,DEPT_NAME,SCHOOL_CODE,EMP_NUM,DEPT_ADDRESS,DEPT_EXTENSION]\nTable EMPLOYEE, columns = [*,EMP_NUM,EMP_LNAME,EMP_FNAME,EMP_INITIAL,EMP_JOBCODE,EMP_HIREDATE,EMP_DOB]\nTable ENROLL, columns = [*,CLASS_CODE,STU_NUM,ENROLL_GRADE]\nTable PROFESSOR, columns = [*,EMP_NUM,DEPT_CODE,PROF_OFFICE,PROF_EXTENSION,PROF_HIGH_DEGREE]\nTable STUDENT, columns = [*,STU_NUM,STU_LNAME,STU_FNAME,STU_INIT,STU_DOB,STU_HRS,STU_CLASS,STU_GPA,STU_TRANSFER,DEPT_CODE,STU_PHONE,PROF_NUM]\n",
+        "foreign_keys": "Foreign_keys = [CLASS.PROF_NUM = EMPLOYEE.EMP_NUM,CLASS.CRS_CODE = COURSE.CRS_CODE,COURSE.DEPT_CODE = DEPARTMENT.DEPT_CODE,DEPARTMENT.EMP_NUM = EMPLOYEE.EMP_NUM,ENROLL.STU_NUM = STUDENT.STU_NUM,ENROLL.CLASS_CODE = CLASS.CLASS_CODE,PROFESSOR.DEPT_CODE = DEPARTMENT.DEPT_CODE,PROFESSOR.EMP_NUM = EMPLOYEE.EMP_NUM,STUDENT.DEPT_CODE = DEPARTMENT.DEPT_CODE]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "college_1",
+        "gold": "SELECT T1.emp_fname FROM employee AS T1 JOIN professor AS T2 ON T1.emp_num  =  T2.emp_num JOIN department AS T3 ON T2.dept_code  =  T3.dept_code WHERE T3.dept_name  =  'History' EXCEPT SELECT T4.emp_fname FROM employee AS T4 JOIN CLASS AS T5 ON T4.emp_num  =  T5.prof_num",
+        "question": "What are the first names of all history professors who do not teach?",
+        "fields": "Table CLASS, columns = [*,CLASS_CODE,CRS_CODE,CLASS_SECTION,CLASS_TIME,CLASS_ROOM,PROF_NUM]\nTable COURSE, columns = [*,CRS_CODE,DEPT_CODE,CRS_DESCRIPTION,CRS_CREDIT]\nTable DEPARTMENT, columns = [*,DEPT_CODE,DEPT_NAME,SCHOOL_CODE,EMP_NUM,DEPT_ADDRESS,DEPT_EXTENSION]\nTable EMPLOYEE, columns = [*,EMP_NUM,EMP_LNAME,EMP_FNAME,EMP_INITIAL,EMP_JOBCODE,EMP_HIREDATE,EMP_DOB]\nTable ENROLL, columns = [*,CLASS_CODE,STU_NUM,ENROLL_GRADE]\nTable PROFESSOR, columns = [*,EMP_NUM,DEPT_CODE,PROF_OFFICE,PROF_EXTENSION,PROF_HIGH_DEGREE]\nTable STUDENT, columns = [*,STU_NUM,STU_LNAME,STU_FNAME,STU_INIT,STU_DOB,STU_HRS,STU_CLASS,STU_GPA,STU_TRANSFER,DEPT_CODE,STU_PHONE,PROF_NUM]\n",
+        "foreign_keys": "Foreign_keys = [CLASS.PROF_NUM = EMPLOYEE.EMP_NUM,CLASS.CRS_CODE = COURSE.CRS_CODE,COURSE.DEPT_CODE = DEPARTMENT.DEPT_CODE,DEPARTMENT.EMP_NUM = EMPLOYEE.EMP_NUM,ENROLL.STU_NUM = STUDENT.STU_NUM,ENROLL.CLASS_CODE = CLASS.CLASS_CODE,PROFESSOR.DEPT_CODE = DEPARTMENT.DEPT_CODE,PROFESSOR.EMP_NUM = EMPLOYEE.EMP_NUM,STUDENT.DEPT_CODE = DEPARTMENT.DEPT_CODE]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "college_1",
+        "gold": "SELECT T1.emp_fname FROM employee AS T1 JOIN CLASS AS T2 ON T1.emp_num  =  T2.prof_num WHERE crs_code  =  'CIS-220' INTERSECT SELECT T1.emp_fname FROM employee AS T1 JOIN CLASS AS T2 ON T1.emp_num  =  T2.prof_num WHERE crs_code  =  'QM-261'",
+        "question": "Find the first name of the professor who is teaching two courses with code CIS-220 and QM-261.",
+        "fields": "Table CLASS, columns = [*,CLASS_CODE,CRS_CODE,CLASS_SECTION,CLASS_TIME,CLASS_ROOM,PROF_NUM]\nTable COURSE, columns = [*,CRS_CODE,DEPT_CODE,CRS_DESCRIPTION,CRS_CREDIT]\nTable DEPARTMENT, columns = [*,DEPT_CODE,DEPT_NAME,SCHOOL_CODE,EMP_NUM,DEPT_ADDRESS,DEPT_EXTENSION]\nTable EMPLOYEE, columns = [*,EMP_NUM,EMP_LNAME,EMP_FNAME,EMP_INITIAL,EMP_JOBCODE,EMP_HIREDATE,EMP_DOB]\nTable ENROLL, columns = [*,CLASS_CODE,STU_NUM,ENROLL_GRADE]\nTable PROFESSOR, columns = [*,EMP_NUM,DEPT_CODE,PROF_OFFICE,PROF_EXTENSION,PROF_HIGH_DEGREE]\nTable STUDENT, columns = [*,STU_NUM,STU_LNAME,STU_FNAME,STU_INIT,STU_DOB,STU_HRS,STU_CLASS,STU_GPA,STU_TRANSFER,DEPT_CODE,STU_PHONE,PROF_NUM]\n",
+        "foreign_keys": "Foreign_keys = [CLASS.PROF_NUM = EMPLOYEE.EMP_NUM,CLASS.CRS_CODE = COURSE.CRS_CODE,COURSE.DEPT_CODE = DEPARTMENT.DEPT_CODE,DEPARTMENT.EMP_NUM = EMPLOYEE.EMP_NUM,ENROLL.STU_NUM = STUDENT.STU_NUM,ENROLL.CLASS_CODE = CLASS.CLASS_CODE,PROFESSOR.DEPT_CODE = DEPARTMENT.DEPT_CODE,PROFESSOR.EMP_NUM = EMPLOYEE.EMP_NUM,STUDENT.DEPT_CODE = DEPARTMENT.DEPT_CODE]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "college_1",
+        "gold": "SELECT T1.stu_fname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num  =  T2.stu_num JOIN CLASS AS T3 ON T2.class_code  =  T3.class_code JOIN course AS T4 ON T3.crs_code  =  T4.crs_code JOIN department AS T5 ON T5.dept_code  =  T4.dept_code WHERE T5.dept_name  =  'Accounting' INTERSECT SELECT T1.stu_fname FROM student AS T1 JOIN enroll AS T2 ON T1.stu_num  =  T2.stu_num JOIN CLASS AS T3 ON T2.class_code  =  T3.class_code JOIN course AS T4 ON T3.crs_code  =  T4.crs_code JOIN department AS T5 ON T5.dept_code  =  T4.dept_code WHERE T5.dept_name  =  'Computer Info. Systems'",
+        "question": "What are the first names of all students taking accoutning and Computer Information Systems classes?",
+        "fields": "Table CLASS, columns = [*,CLASS_CODE,CRS_CODE,CLASS_SECTION,CLASS_TIME,CLASS_ROOM,PROF_NUM]\nTable COURSE, columns = [*,CRS_CODE,DEPT_CODE,CRS_DESCRIPTION,CRS_CREDIT]\nTable DEPARTMENT, columns = [*,DEPT_CODE,DEPT_NAME,SCHOOL_CODE,EMP_NUM,DEPT_ADDRESS,DEPT_EXTENSION]\nTable EMPLOYEE, columns = [*,EMP_NUM,EMP_LNAME,EMP_FNAME,EMP_INITIAL,EMP_JOBCODE,EMP_HIREDATE,EMP_DOB]\nTable ENROLL, columns = [*,CLASS_CODE,STU_NUM,ENROLL_GRADE]\nTable PROFESSOR, columns = [*,EMP_NUM,DEPT_CODE,PROF_OFFICE,PROF_EXTENSION,PROF_HIGH_DEGREE]\nTable STUDENT, columns = [*,STU_NUM,STU_LNAME,STU_FNAME,STU_INIT,STU_DOB,STU_HRS,STU_CLASS,STU_GPA,STU_TRANSFER,DEPT_CODE,STU_PHONE,PROF_NUM]\n",
+        "foreign_keys": "Foreign_keys = [CLASS.PROF_NUM = EMPLOYEE.EMP_NUM,CLASS.CRS_CODE = COURSE.CRS_CODE,COURSE.DEPT_CODE = DEPARTMENT.DEPT_CODE,DEPARTMENT.EMP_NUM = EMPLOYEE.EMP_NUM,ENROLL.STU_NUM = STUDENT.STU_NUM,ENROLL.CLASS_CODE = CLASS.CLASS_CODE,PROFESSOR.DEPT_CODE = DEPARTMENT.DEPT_CODE,PROFESSOR.EMP_NUM = EMPLOYEE.EMP_NUM,STUDENT.DEPT_CODE = DEPARTMENT.DEPT_CODE]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "sports_competition",
+        "gold": "SELECT country FROM competition WHERE competition_type  =  'Friendly' INTERSECT SELECT country FROM competition WHERE competition_type  =  'Tournament'",
+        "question": "which countries did participated in both Friendly and Tournament type competitions.",
+        "fields": "Table club, columns = [*,Club_ID,name,Region,Start_year]\nTable club_rank, columns = [*,Rank,Club_ID,Gold,Silver,Bronze,Total]\nTable competition, columns = [*,Competition_ID,Year,Competition_type,Country]\nTable competition_result, columns = [*,Competition_ID,Club_ID_1,Club_ID_2,Score]\nTable player, columns = [*,Player_ID,name,Position,Club_ID,Apps,Tries,Goals,Points]\n",
+        "foreign_keys": "Foreign_keys = [club_rank.Club_ID = club.Club_ID,player.Club_ID = club.Club_ID,competition_result.Competition_ID = competition.Competition_ID,competition_result.Club_ID_2 = club.Club_ID,competition_result.Club_ID_1 = club.Club_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "sports_competition",
+        "gold": "SELECT country FROM competition WHERE competition_type  =  'Friendly' INTERSECT SELECT country FROM competition WHERE competition_type  =  'Tournament'",
+        "question": "What are the countries that participated in both friendly and tournament type competitions?",
+        "fields": "Table club, columns = [*,Club_ID,name,Region,Start_year]\nTable club_rank, columns = [*,Rank,Club_ID,Gold,Silver,Bronze,Total]\nTable competition, columns = [*,Competition_ID,Year,Competition_type,Country]\nTable competition_result, columns = [*,Competition_ID,Club_ID_1,Club_ID_2,Score]\nTable player, columns = [*,Player_ID,name,Position,Club_ID,Apps,Tries,Goals,Points]\n",
+        "foreign_keys": "Foreign_keys = [club_rank.Club_ID = club.Club_ID,player.Club_ID = club.Club_ID,competition_result.Competition_ID = competition.Competition_ID,competition_result.Club_ID_2 = club.Club_ID,competition_result.Club_ID_1 = club.Club_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "sports_competition",
+        "gold": "SELECT country FROM competition EXCEPT SELECT country FROM competition WHERE competition_type  =  'Friendly'",
+        "question": "Find the countries that have never participated in any competition with Friendly type.",
+        "fields": "Table club, columns = [*,Club_ID,name,Region,Start_year]\nTable club_rank, columns = [*,Rank,Club_ID,Gold,Silver,Bronze,Total]\nTable competition, columns = [*,Competition_ID,Year,Competition_type,Country]\nTable competition_result, columns = [*,Competition_ID,Club_ID_1,Club_ID_2,Score]\nTable player, columns = [*,Player_ID,name,Position,Club_ID,Apps,Tries,Goals,Points]\n",
+        "foreign_keys": "Foreign_keys = [club_rank.Club_ID = club.Club_ID,player.Club_ID = club.Club_ID,competition_result.Competition_ID = competition.Competition_ID,competition_result.Club_ID_2 = club.Club_ID,competition_result.Club_ID_1 = club.Club_ID]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes difference set logic, so we can decompose the question into two subproblems: 1. what are the countries that have participated in any competition; 2. what are the countries that have participated in competitions with Friendly type.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use table ['competition']. To complete the second subproblem, we need to use tables ['competition'].\n\n<3> Operation: Use 'where' to filter using column 'Competition_type' in table 'competition'.\n\n<4> SQL Generation: Use 'except' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT Country FROM competition EXCEPT SELECT Country FROM competition WHERE Competition_type = 'Friendly'",
+        "predict": ""
+    },
+    {
+        "db_id": "sports_competition",
+        "gold": "SELECT country FROM competition EXCEPT SELECT country FROM competition WHERE competition_type  =  'Friendly'",
+        "question": "What are the countries that have never participated in any friendly-type competitions?",
+        "fields": "Table club, columns = [*,Club_ID,name,Region,Start_year]\nTable club_rank, columns = [*,Rank,Club_ID,Gold,Silver,Bronze,Total]\nTable competition, columns = [*,Competition_ID,Year,Competition_type,Country]\nTable competition_result, columns = [*,Competition_ID,Club_ID_1,Club_ID_2,Score]\nTable player, columns = [*,Player_ID,name,Position,Club_ID,Apps,Tries,Goals,Points]\n",
+        "foreign_keys": "Foreign_keys = [club_rank.Club_ID = club.Club_ID,player.Club_ID = club.Club_ID,competition_result.Competition_ID = competition.Competition_ID,competition_result.Club_ID_2 = club.Club_ID,competition_result.Club_ID_1 = club.Club_ID]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "music_1",
+        "gold": "SELECT f_id FROM files WHERE formats  =  \"mp4\" INTERSECT SELECT f_id FROM song WHERE resolution  <  1000",
+        "question": "What is the id of the files that are available in the format of mp4 and a resolution smaller than 1000?",
+        "fields": "Table artist, columns = [*,artist_name,country,gender,preferred_genre]\nTable files, columns = [*,f_id,artist_name,file_size,duration,formats]\nTable genre, columns = [*,g_name,rating,most_popular_in]\nTable song, columns = [*,song_name,artist_name,country,f_id,genre_is,rating,languages,releasedate,resolution]\n",
+        "foreign_keys": "Foreign_keys = [artist.preferred_genre = genre.g_name,files.artist_name = artist.artist_name,song.genre_is = genre.g_name,song.f_id = files.f_id,song.artist_name = artist.artist_name]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "music_1",
+        "gold": "SELECT f_id FROM files WHERE formats  =  \"mp4\" UNION SELECT f_id FROM song WHERE resolution  >  720",
+        "question": "What are the ids of all songs that are available on mp4 or have a higher resolution than 720?",
+        "fields": "Table artist, columns = [*,artist_name,country,gender,preferred_genre]\nTable files, columns = [*,f_id,artist_name,file_size,duration,formats]\nTable genre, columns = [*,g_name,rating,most_popular_in]\nTable song, columns = [*,song_name,artist_name,country,f_id,genre_is,rating,languages,releasedate,resolution]\n",
+        "foreign_keys": "Foreign_keys = [artist.preferred_genre = genre.g_name,files.artist_name = artist.artist_name,song.genre_is = genre.g_name,song.f_id = files.f_id,song.artist_name = artist.artist_name]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "music_1",
+        "gold": "SELECT T2.song_name FROM files AS T1 JOIN song AS T2 ON T1.f_id  =  T2.f_id WHERE T1.duration LIKE \"4:%\" UNION SELECT song_name FROM song WHERE languages  =  \"english\"",
+        "question": "List the names of all songs that have 4 minute duration or are in English.",
+        "fields": "Table artist, columns = [*,artist_name,country,gender,preferred_genre]\nTable files, columns = [*,f_id,artist_name,file_size,duration,formats]\nTable genre, columns = [*,g_name,rating,most_popular_in]\nTable song, columns = [*,song_name,artist_name,country,f_id,genre_is,rating,languages,releasedate,resolution]\n",
+        "foreign_keys": "Foreign_keys = [artist.preferred_genre = genre.g_name,files.artist_name = artist.artist_name,song.genre_is = genre.g_name,song.f_id = files.f_id,song.artist_name = artist.artist_name]\n",
+        "reasoning": "<1> Question Decomposition: In this step, we contemplate how to decompose the query. The query emphasizes union logic, so we can decompose the question into two subproblems: 1. what are the names of all songs that have 4-minute duration; 2. what are the names of all songs that are in English.\n\n<2> Schema Linking: In this step, we identify the tables and columns that should be used based on the requirements of the query and the foreign key relationships. To complete the first subproblem, we need to use tables ['song', 'files']. To complete the second subproblem, we need to use table ['song'].\n\n<3> Operation: Use 'where' to filter using column 'duration' in table 'files' for the first subproblem, and column 'languages' in table 'song' for the second subproblem. The duration of music is formatted in 'XX:YY', so we can use 'LIKE' to filter.\n\n<4> SQL Generation: Use 'union' operation to connect the queries of subproblems to form the final SQL statement.\n\nSQL query: \nSELECT T1.song_name FROM song AS T1 JOIN files AS T2 ON T1.f_id = T2.f_id WHERE T2.duration LIKE '4:%' UNION SELECT song_name FROM song WHERE languages = \"english\"",
+        "predict": ""
+    },
+    {
+        "db_id": "music_1",
+        "gold": "SELECT T2.song_name FROM files AS T1 JOIN song AS T2 ON T1.f_id  =  T2.f_id WHERE T1.duration LIKE \"4:%\" UNION SELECT song_name FROM song WHERE languages  =  \"english\"",
+        "question": "What are the names of all songs that are approximately 4 minutes long or are in English?",
+        "fields": "Table artist, columns = [*,artist_name,country,gender,preferred_genre]\nTable files, columns = [*,f_id,artist_name,file_size,duration,formats]\nTable genre, columns = [*,g_name,rating,most_popular_in]\nTable song, columns = [*,song_name,artist_name,country,f_id,genre_is,rating,languages,releasedate,resolution]\n",
+        "foreign_keys": "Foreign_keys = [artist.preferred_genre = genre.g_name,files.artist_name = artist.artist_name,song.genre_is = genre.g_name,song.f_id = files.f_id,song.artist_name = artist.artist_name]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "music_1",
+        "gold": "SELECT DISTINCT artist_name FROM song WHERE languages  =  \"english\" EXCEPT SELECT DISTINCT artist_name FROM song WHERE rating  >  8",
+        "question": "Find the names of the artists who have produced English songs but have never received rating higher than 8.",
+        "fields": "Table artist, columns = [*,artist_name,country,gender,preferred_genre]\nTable files, columns = [*,f_id,artist_name,file_size,duration,formats]\nTable genre, columns = [*,g_name,rating,most_popular_in]\nTable song, columns = [*,song_name,artist_name,country,f_id,genre_is,rating,languages,releasedate,resolution]\n",
+        "foreign_keys": "Foreign_keys = [artist.preferred_genre = genre.g_name,files.artist_name = artist.artist_name,song.genre_is = genre.g_name,song.f_id = files.f_id,song.artist_name = artist.artist_name]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "music_1",
+        "gold": "SELECT DISTINCT artist_name FROM song WHERE languages  =  \"english\" EXCEPT SELECT DISTINCT artist_name FROM song WHERE rating  >  8",
+        "question": "What are the names of the different artists that have produced a song in English but have never receieved a rating higher than 8?",
+        "fields": "Table artist, columns = [*,artist_name,country,gender,preferred_genre]\nTable files, columns = [*,f_id,artist_name,file_size,duration,formats]\nTable genre, columns = [*,g_name,rating,most_popular_in]\nTable song, columns = [*,song_name,artist_name,country,f_id,genre_is,rating,languages,releasedate,resolution]\n",
+        "foreign_keys": "Foreign_keys = [artist.preferred_genre = genre.g_name,files.artist_name = artist.artist_name,song.genre_is = genre.g_name,song.f_id = files.f_id,song.artist_name = artist.artist_name]\n",
+        "reasoning": "",
+        "predict": ""
+    },
+    {
+        "db_id": "music_1",
+        "gold": "SELECT DISTINCT artist_name FROM artist WHERE country  =  \"Bangladesh\" EXCEPT SELECT DISTINCT artist_name FROM song WHERE rating  >  7",
+        "question": "Find the names of the artists who are from Bangladesh and have never received rating higher than 7.",
+        "fields": "Table artist, columns = [*,artist_name,country,gender,preferred_genre]\nTable files, columns = [*,f_id,artist_name,file_size,duration,formats]\nTable genre, columns = [*,g_name,rating,most_popular_in]\nTable song, columns = [*,song_name,artist_name,country,f_id,genre_is,rating,languages,releasedate,resolution]\n",
+        "foreign_keys": "Foreign_keys = [artist.preferred_genre = genre.g_name,files.artist_name = artist.artist_name,song.genre_is = genre.g_name,song.f_id = files.f_id,song.artist_name = artist.artist_name]\n",
+        "reasoning": "",
+        "predict": ""
+    }
+]

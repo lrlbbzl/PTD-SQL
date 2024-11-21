@@ -1,0 +1,18 @@
+[
+    {
+        "p_str": "SELECT rank ,  company ,  market_1 FROM company WHERE main_industry  =  'Banking' ORDER BY sales_billion ,  profits_billion",
+        "g_str": [
+            "SELECT rank ,  company ,  market_value FROM company WHERE main_industry  =  'Banking' ORDER BY sales_billion ,  profits_billion",
+            "gas_company"
+        ],
+        "hardness": "medium"
+    },
+    {
+        "p_str": "SELECT min(market_1) ,  max(market_1) ,  avg(market_1) FROM company",
+        "g_str": [
+            "SELECT min(market_value) ,  max(market_value) ,  avg(market_value) FROM company",
+            "gas_company"
+        ],
+        "hardness": "medium"
+    }
+]

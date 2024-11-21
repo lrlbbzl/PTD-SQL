@@ -1,0 +1,3 @@
+SELECT AVG(loser_age) AS average_loser_age, AVG(winner_age) AS average_winner_age FROM matches
+SELECT charge_type, charge_amount FROM Charges GROUP BY charge_type
+SELECT DISTINCT breed_code, size_code FROM Dogs

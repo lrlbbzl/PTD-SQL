@@ -1,0 +1,78 @@
+SELECT Name, Country, Age FROM singer ORDER BY Age ASC
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'France'
+SELECT AVG(Age), MIN(Age), MAX(Age) FROM singer WHERE Country = 'France'
+SELECT Name, Song_release_year  FROM singer  WHERE Age = (SELECT MIN(Age) FROM singer)
+SELECT Name, Song_release_year  FROM singer  WHERE Age = (SELECT MIN(Age) FROM singer)
+SELECT COUNT(*) FROM concert WHERE stadium_id = (SELECT stadium_id FROM stadium ORDER BY capacity DESC LIMIT 1)
+SELECT COUNT(*) FROM concert WHERE stadium_id = (SELECT stadium_id FROM stadium ORDER BY capacity DESC LIMIT 1)
+SELECT weight FROM Has_Pet AS T1 JOIN Pets AS T2 ON T1.PetID = T2.PetID WHERE T2.PetType = 'dog' AND T2.pet_age = (SELECT MIN(pet_age) FROM Pets WHERE PetType = 'dog')
+SELECT weight FROM Has_Pet AS T1 JOIN Pets AS T2 ON T1.PetID = T2.PetID WHERE T2.PetType = 'dog' AND T2.pet_age = (SELECT MIN(pet_age) FROM Pets WHERE PetType = 'dog')
+SELECT PetType, weight FROM Pets WHERE pet_age = (SELECT MIN(pet_age) FROM Pets)
+SELECT T2.PetType, T2.weight FROM Has_Pet AS T1 JOIN Pets AS T2 ON T1.PetID = T2.PetID WHERE T2.pet_age = (SELECT MIN(pet_age) FROM Pets)
+SELECT car_makers.Id, car_makers.FullName, COUNT(model_list.ModelId) FROM car_makers JOIN model_list ON car_makers.Id = model_list.Maker GROUP BY car_makers.Id, car_makers.FullName
+SELECT CountryName, CountryId FROM countries INNER JOIN car_makers ON countries.CountryId = car_makers.Country
+SELECT CountryName, CountryId FROM countries INNER JOIN car_makers ON countries.CountryId = car_makers.Country
+SELECT T2.Model FROM cars_data AS T1 JOIN car_names AS T2 ON T1.Id = T2.MakeId JOIN model_list AS T3 ON T2.Model = T3.Model WHERE T1.MPG = (SELECT MAX(MPG) FROM cars_data)
+SELECT count(*) FROM cars_data WHERE Year = 1980
+SELECT count(*) FROM cars_data WHERE Year = 1980
+SELECT Airline, Abbreviation FROM airlines WHERE Country = 'USA'
+SELECT Airline, Abbreviation FROM airlines WHERE Country = 'USA'
+SELECT Name FROM employee ORDER BY Age ASC
+SELECT Name FROM employee ORDER BY Age ASC
+SELECT Manager_name, District  FROM shop  WHERE Number_products = (SELECT MAX(Number_products) FROM shop)
+SELECT Manager_name, District  FROM shop  WHERE Number_products = (SELECT MAX(Number_products) FROM shop)
+SELECT Name, Location, District FROM shop ORDER BY Number_products DESC
+SELECT Name, Location, District FROM shop ORDER BY Number_products DESC
+SELECT Name FROM employee WHERE Employee_ID = (SELECT Employee_ID FROM evaluation ORDER BY Bonus DESC LIMIT 1)
+SELECT Name FROM employee JOIN evaluation ON employee.Employee_ID = evaluation.Employee_ID WHERE Bonus = (SELECT MAX(Bonus) FROM evaluation)
+SELECT Name FROM teacher ORDER BY Age ASC
+SELECT Name FROM teacher ORDER BY Age ASC
+SELECT Name FROM museum JOIN visit ON museum.Museum_ID = visit.Museum_ID WHERE visitor_ID IS NULL
+SELECT first_name, country_code FROM players WHERE birth_date = (SELECT MIN(birth_date) FROM players)
+SELECT first_name, country_code FROM players WHERE birth_date = (SELECT MIN(birth_date) FROM players)
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM players ORDER BY birth_date ASC
+SELECT CONCAT(first_name, ' ', last_name) AS full_name FROM players ORDER BY birth_date ASC
+SELECT p1.first_name AS winner_first_name, p1.last_name AS winner_last_name, p2.first_name AS loser_first_name, p2.last_name AS loser_last_name FROM matches AS m JOIN players AS p1 ON m.winner_id = p1.player_id JOIN players AS p2 ON m.loser_id = p2.player_id WHERE m.minutes = (SELECT MAX(minutes) FROM matches)
+SELECT p1.first_name AS winner_first_name, p1.last_name AS winner_last_name, p2.first_name AS loser_first_name, p2.last_name AS loser_last_name FROM matches AS m JOIN players AS p1 ON m.winner_id = p1.player_id JOIN players AS p2 ON m.loser_id = p2.player_id WHERE m.minutes = (SELECT MAX(minutes) FROM matches)
+SELECT T2.first_name, T2.last_name, T3.ranking FROM matches AS T1 JOIN players AS T2 ON T1.winner_id = T2.player_id JOIN rankings AS T3 ON T2.player_id = T3.player_id WHERE T1.winner_age IS NOT NULL ORDER BY T1.winner_age ASC LIMIT 3
+SELECT T2.first_name, T2.last_name, T3.ranking FROM matches AS T1 JOIN players AS T2 ON T1.winner_id = T2.player_id JOIN rankings AS T3 ON T2.player_id = T3.player_id WHERE T1.winner_age IS NOT NULL ORDER BY T1.winner_age ASC LIMIT 3
+SELECT first_name, middle_name, last_name FROM Students ORDER BY date_first_registered ASC LIMIT 1
+SELECT T1.first_name, T1.middle_name, T1.last_name FROM Students AS T1 JOIN Transcripts AS T2 ON T1.student_id = T2.student_id ORDER BY T2.transcript_date ASC LIMIT 1
+SELECT T1.first_name, T1.middle_name, T1.last_name  FROM Students AS T1  JOIN Transcripts AS T2 ON T1.student_id = T2.student_id  WHERE T2.transcript_date = (SELECT MIN(transcript_date) FROM Transcripts)
+SELECT Title FROM Cartoon ORDER BY Title ASC
+SELECT Title FROM Cartoon ORDER BY Title ASC
+SELECT Title, Directed_by FROM Cartoon ORDER BY Original_air_date
+SELECT Title, Directed_by FROM Cartoon ORDER BY Original_air_date
+SELECT Production_code, Channel FROM Cartoon ORDER BY Original_air_date DESC LIMIT 1
+SELECT Production_code, Channel FROM Cartoon ORDER BY Original_air_date DESC LIMIT 1
+SELECT people.Name, poker_player.Earnings FROM people JOIN poker_player ON people.People_ID = poker_player.People_ID ORDER BY poker_player.Earnings DESC
+SELECT Money_Rank FROM poker_player JOIN (SELECT People_ID FROM people WHERE Height = (SELECT MAX(Height) FROM people)) AS T ON poker_player.People_ID = T.People_ID
+SELECT Money_Rank FROM poker_player JOIN (SELECT People_ID FROM people WHERE Height = (SELECT MAX(Height) FROM people)) AS T ON poker_player.People_ID = T.People_ID
+SELECT Name FROM country JOIN countrylanguage ON country.Code = countrylanguage.CountryCode GROUP BY CountryCode ORDER BY COUNT(*) DESC LIMIT 1
+SELECT Name FROM country JOIN countrylanguage ON country.Code = countrylanguage.CountryCode GROUP BY CountryCode ORDER BY COUNT(*) DESC LIMIT 1
+SELECT COUNT(DISTINCT Continent) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = 'Chinese' AND T2.IsOfficial = 'T'
+SELECT COUNT(DISTINCT Continent) FROM country AS T1 JOIN countrylanguage AS T2 ON T1.Code = T2.CountryCode WHERE T2.Language = 'Chinese' AND T2.IsOfficial = 'T'
+SELECT Name, Population, LifeExpectancy FROM country WHERE Continent = 'Asia' ORDER BY SurfaceArea DESC LIMIT 1
+SELECT T1.Name, T1.IndepYear, T1.SurfaceArea FROM country AS T1 JOIN city AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Code HAVING COUNT(*) = (SELECT MIN(COUNT(*)) FROM city GROUP BY CountryCode)
+SELECT T1.Name, T1.IndepYear, T1.SurfaceArea FROM country AS T1 JOIN city AS T2 ON T1.Code = T2.CountryCode GROUP BY T1.Code HAVING COUNT(*) = (SELECT MIN(COUNT(*)) FROM city GROUP BY CountryCode)
+SELECT population, name, headofstate FROM country ORDER BY surfacearea DESC LIMIT 1
+SELECT Name, SurfaceArea FROM country ORDER BY SurfaceArea DESC LIMIT 5
+SELECT Name FROM country ORDER BY Population DESC LIMIT 3
+SELECT Name FROM country ORDER BY Population DESC LIMIT 3
+SELECT Name FROM country ORDER BY Population ASC LIMIT 3
+SELECT Name FROM country ORDER BY Population ASC LIMIT 3
+SELECT Name FROM conductor ORDER BY Age DESC
+SELECT Name FROM conductor ORDER BY Age DESC
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded ASC
+SELECT Record_Company FROM orchestra ORDER BY Year_of_Founded ASC
+SELECT AVG(grade) FROM Highschooler WHERE ID IN (SELECT student_id FROM Friend)
+SELECT AVG(grade) FROM Highschooler WHERE ID IN (SELECT student_id FROM Friend)
+SELECT Treatment_Types.treatment_type_description FROM Treatment_Types JOIN Treatments ON Treatment_Types.treatment_type_code = Treatments.treatment_type_code WHERE Treatments.cost_of_treatment = (SELECT MIN(cost_of_treatment) FROM Treatments)
+SELECT treatment_type_description FROM Treatment_Types ORDER BY charge_amount ASC LIMIT 1
+SELECT O.last_name FROM Dogs AS D JOIN Owners AS O ON D.owner_id = O.owner_id WHERE D.age = (SELECT MIN(age) FROM Dogs)
+SELECT O.last_name FROM Dogs AS D JOIN Owners AS O ON D.owner_id = O.owner_id WHERE D.age = (SELECT MIN(age) FROM Dogs)
+SELECT charge_amount FROM Charges JOIN Treatments ON Charges.charge_id = Treatments.treatment_id ORDER BY Treatments.date_of_treatment DESC LIMIT 1
+SELECT charge_amount FROM Charges JOIN Treatments ON Charges.charge_id = Treatments.treatment_id ORDER BY Treatments.date_of_treatment DESC LIMIT 1
+SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC
+SELECT Name FROM singer ORDER BY Net_Worth_Millions ASC
+SELECT Name FROM singer ORDER BY Net_Worth_Millions DESC LIMIT 1
